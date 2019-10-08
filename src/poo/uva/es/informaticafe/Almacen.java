@@ -28,19 +28,6 @@ public class Almacen {
 	 */
 	public void creaProducto(String producto) {
 		// TODO: Implement creaProducto()
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 
 	/**
@@ -57,7 +44,7 @@ public class Almacen {
 	 * Incrementa la cantidad de un producto en el almacen.
 	 * 
 	 * 
-	 * @param producto Producto del que se quiere aum0entar stock
+	 * @param producto Producto del que se quiere aumentar stock
 	 * @param stock    cantidad a aumentar (ha de ser mayor que 0)
 	 */
 	public void incrementarStock(String producto, int stock) {
@@ -82,10 +69,7 @@ public class Almacen {
 	 */
 	public void eliminar(String producto) {
 		// TODO: Implement eliminar()
-											
-	
-	
-							}
+	}
 
 	/**
 	 * Comprueba la existencia de un producto en el almacen.
@@ -102,7 +86,7 @@ public class Almacen {
 	 * Obtiene la cantidad en stock de un producto en el almacen.
 	 * 
 	 * @param producto Producto del que se quiere comprobar el stock
-	 * @return Cantidad de stock dispoible del producto
+	 * @return Cantidad de stock disponible del producto
 	 */
 	public int cantidad(String producto) {
 		// TODO: Implement cantidad()
