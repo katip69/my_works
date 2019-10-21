@@ -1,6 +1,7 @@
 package poo.uva.es.informaticafe;
 
 import java.util.HashMap;
+import poo.uva.es.informaticafe.Producto;
 
 /**
  * La clase {@link Almacen} es una implementacion de un sistema de inventario.
@@ -12,16 +13,14 @@ import java.util.HashMap;
  */
 public class Almacen {
 
-	// TODO: Ask about setter/getter implementation on hashmap or other iterative
-	// types
-	private HashMap<String, Integer> inventario;
+	private HashMap<Producto, Integer> inventario;
 
 	/**
 	 * Constructor por defecto de la clase {@link Almacen}. Genera un inventario
 	 * vacio.
 	 */
 	public Almacen() {
-		inventario = new HashMap<String, Integer>();
+		inventario = new HashMap<Producto, Integer>();
 	}
 
 	/**
@@ -29,7 +28,7 @@ public class Almacen {
 	 * 
 	 * @param producto Nombre del producto que se quiere inventariar
 	 */
-	public void creaProducto(String producto) {
+	public void creaProducto(Producto producto) {
 		inventario.put(producto, 0);
 	}
 
@@ -40,10 +39,11 @@ public class Almacen {
 	 * @param stock    Cantidad de producto que se quiere inicializar (ha de ser
 	 *                 igual o mayor a 0)
 	 */
-	public void creaProducto(String producto, int stock) {
+	public void creaProducto(Producto producto, int stock) {
 		if (stock < 0) {
 			// TODO: Throw exception due to invalid stock amount
 		}
+
 		inventario.put(producto, stock);
 	}
 
@@ -57,7 +57,7 @@ public class Almacen {
 	 * @param producto Producto del que se quiere aumentar stock
 	 * @param stock    cantidad a aumentar (ha de ser mayor que 0)
 	 */
-	public void incrementarStock(String producto, int stock) {
+	public void incrementarStock(Producto producto, int stock) {
 		if (stock <= 0) {
 			// TODO: Throw exception because the stock is invalid
 		}
@@ -76,7 +76,7 @@ public class Almacen {
 	 * @param producto Producto del que se quiere remover stock
 	 * @param stock    cantidad a reducir (ha de ser mayor que 0)
 	 */
-	public void removerStock(String producto, int stock) {
+	public void removerStock(Producto producto, int stock) {
 		if (stock <= 0) {
 			// TODO: Throw exception because the stock is invalid
 		}
@@ -97,7 +97,7 @@ public class Almacen {
 	 * 
 	 * @param producto Nombre del producto a eliminar
 	 */
-	public void eliminar(String producto) {
+	public void eliminar(Producto producto) {
 		if (!existe(producto)) {
 			// TODO: Throw exception because the product doesn't exist
 		}
@@ -111,7 +111,7 @@ public class Almacen {
 	 * @param producto Producto del que se quiere comprobar si existe en el almacen
 	 * @return true si el producto existe en el almacen, false en caso contrario
 	 */
-	public boolean existe(String producto) {
+	public boolean existe(Producto producto) {
 		return inventario.containsKey(producto);
 	}
 
@@ -121,7 +121,7 @@ public class Almacen {
 	 * @param producto Producto del que se quiere comprobar el stock
 	 * @return Cantidad de stock disponible del producto
 	 */
-	public int cantidad(String producto) {
+	public int cantidad(Producto producto) {
 		if (!existe(producto)) {
 			// TODO: Throw exception because the product doesn't exist
 		}
