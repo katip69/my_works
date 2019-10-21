@@ -47,9 +47,6 @@ public class Almacen {
 		inventario.put(producto, stock);
 	}
 
-	// TODO: Ask about incrementarStock and removerStock merging due to code
-	// duplicity
-
 	/**
 	 * Incrementa la cantidad de un producto en el almacen.
 	 * 
