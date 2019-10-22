@@ -43,6 +43,33 @@ public class Producto {
 	}
 
 	/**
+	 * Devuelve el nombre del producto.
+	 * 
+	 * @return nombre del producto
+	 */
+	public String nombre() {
+		return nombre;
+	}
+
+	/**
+	 * Devuelve la descripcion del producto.
+	 * 
+	 * @return descripcion del producto
+	 */
+	public String descripcion() {
+		return descripcion;
+	}
+
+	/**
+	 * Devuelve el precio del producto.
+	 * 
+	 * @return precio del producto
+	 */
+	public double precio() {
+		return precio;
+	}
+
+	/**
 	 * Cambia el precio del producto,no puede ser negativo
 	 * 
 	 * @param precio nuevo precio del producto
