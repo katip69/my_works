@@ -44,6 +44,7 @@ public class Producto {
 
 	/**
 	 * Cambia el precio del producto,no puede ser negativo
+	 * 
 	 * @param precio nuevo precio del producto
 	 */
 
@@ -61,31 +62,49 @@ public class Producto {
 	 */
 	public int unidadesDisponibles() {
 
-		return 0;
+		return stock;
 	}
-	
+
 	/**
 	 * Modifica el stock del producto.
 	 * 
-	 * El nuevo stock ha de ser mayor a 0.
+	 * El nuevo stock ha de ser mayor o igual a 0.
+	 * 
+	 * @param stock aumentamos su valor.
 	 */
 	private void modificarStock(int stock) {
+		if (stock < 0) {
+			// implementar excepción
+		}
+		this.stock = stock;
+
 	}
 
 	/**
-	 * Aumenta el stock del producto en i unidades.
+	 * Aumenta el stock del producto en i unidades. i debe ser mayor que 0
+	 * 
 	 * @param incremento numero de unidades a aumentar.
 	 */
 	public void aumentarStock(int incremento) {
-
+		if (incremento <= 0) {
+			// Excepción
+		}
+		modificarStock(unidadesDisponibles() + incremento);
 	}
 
 	/**
-	 * Reduce el stock del producto en i unidades.
-	 * @param decremento numero de unidades a reducir.
+	 * Reduce el stock del producto en i unidades. i debe ser mayor que 0
+	 * 
+	 * @param decremento número de unidades a reducir.
 	 */
 	public void reducirStock(int decremento) {
-
+		if (decremento <= 0) {
+			// Lanzar Excepción
+		}
+		if (unidadesDisponibles() - decremento < 0) {
+			// Lanzar excepción.
+		}
+		modificarStock(unidadesDisponibles() - decremento);
 	}
 
 }
