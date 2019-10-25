@@ -19,7 +19,7 @@ public class Comanda {
 	private HashMap<String, Integer> productos;
 
 	/**
-	 * Crea una comanda vacia
+	 * Crea una comanda vacía
 	 */
 
 	public Comanda() {
@@ -41,7 +41,7 @@ public class Comanda {
  	*/
 	public HashMap<String, Integer> productos() {
 		// TODO: Implementar productos;
-		return HashMap<String, Integer>();
+		return HashMap<String,Integer>();
 	}
 
 }
