@@ -33,7 +33,7 @@ public class Producto {
 	 * @param nombre      Nombre del producto
 	 * @param descripcion Descripción del producto
 	 * @param precio      Precio del producto
-	 * @param stock       Cantidad de productos disponible no puede ser negativo
+	 * @param stock       Cantidad de productos disponible (no puede ser negativo)
 	 */
 	public Producto(String nombre, String descripcion, double precio, int stock) {
 		this.nombre = nombre;
@@ -70,7 +70,7 @@ public class Producto {
 	}
 
 	/**
-	 * Cambia el precio del producto,no puede ser negativo
+	 * Cambia el precio del producto, no puede ser negativo
 	 * 
 	 * @param precio nuevo precio del producto
 	 */
