@@ -15,7 +15,7 @@ public class Comanda {
 	private int id;
 	private int estado;
 	private LocalDateTime fecha;
-	private float importe;
+	private double importe;
 	private HashMap<String, Integer> productos;
 
 	/**
@@ -43,7 +43,5 @@ public class Comanda {
 		// TODO: Implementar productos;
 		return HashMap<String, Integer>();
 	}
-	
-	
 
 }
