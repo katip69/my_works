@@ -18,7 +18,7 @@ public class Producto {
 	 * 
 	 * @param nombre      Nombre del producto
 	 * @param descripcion Descripción del producto
-	 * @param precio      Precio del prodcuto
+	 * @param precio      Precio del prodcuto (no puede ser negativo)
 	 */
 	public Producto(String nombre, String descripcion, double precio) {
 		this.nombre = nombre;
@@ -97,7 +97,7 @@ public class Producto {
 	 * 
 	 * El nuevo stock ha de ser mayor o igual a 0.
 	 * 
-	 * @param stock aumentamos su valor.
+	 * @param stock cantidad de unidades del producto a aumentar
 	 */
 	private void modificarStock(int stock) {
 		if (stock < 0) {
