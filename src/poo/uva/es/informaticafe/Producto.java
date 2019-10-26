@@ -77,7 +77,7 @@ public class Producto {
 
 	public void cambiaPrecio(double precio) {
 		if (precio < 0) {
-			// TODO: Implementar excepcion
+			throw new IllegalArgumentException("El precio no puede ser negativo.");
 		}
 		this.precio = precio;
 	}
@@ -99,9 +99,9 @@ public class Producto {
 	 * 
 	 * @param stock cantidad de unidades del producto a aumentar
 	 */
-	private void modificarStock(int stock) {
+	public void modificarStock(int stock) {
 		if (stock < 0) {
-			// implementar excepción
+			throw new IllegalArgumentException("El nuevo stock no puede ser negativo.");
 		}
 		this.stock = stock;
 
@@ -114,7 +114,7 @@ public class Producto {
 	 */
 	public void aumentarStock(int incremento) {
 		if (incremento <= 0) {
-			// Excepción
+			throw new IllegalArgumentException("El incremento no puede ser menor o igual a 0.");
 		}
 		modificarStock(unidadesDisponibles() + incremento);
 	}
@@ -126,10 +126,10 @@ public class Producto {
 	 */
 	public void reducirStock(int decremento) {
 		if (decremento <= 0) {
-			// Lanzar Excepción
+			throw new IllegalArgumentException("El decremento no puede ser igual o menor a 0.");
 		}
 		if (unidadesDisponibles() - decremento < 0) {
-			// Lanzar excepción.
+			throw new IllegalArgumentException("El decremento no puede ser mayor a las unidades disponibles.");
 		}
 		modificarStock(unidadesDisponibles() - decremento);
 	}
