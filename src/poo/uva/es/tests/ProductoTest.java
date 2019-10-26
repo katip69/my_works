@@ -29,10 +29,15 @@ public class ProductoTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void nuevoProductoConprecioInvalido() {
+	public void nuevoProductoConPrecioInvalido() {
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", -0.56);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void nuevoProductoConStockInvalido() {
+		Producto manzana = new Producto("Manzana", "Fruta etc etc", 0.56, -3);
+	}
+	
 	@Test
 	public void nuevoPrecio() {
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", 0.56);
