@@ -41,7 +41,14 @@ public class Comanda {
 
 	}
 
+	/**
+	 * Devuelve un HashMap con todos los productos y sus cantidades pertenecientes a
+	 * la comanda.
+	 * 
+	 * @return pares producto-cantidad contenidos en la comanda
+	 */
 	public HashMap<Producto, Integer> productos() {
+		// TODO: This might break things if they modify it. Check with Felix
 		return productos;
 	}
 
@@ -139,7 +146,7 @@ public class Comanda {
 	 */
 	public void modificaProducto(Producto producto, int cantidad) {
 		if (!tieneProducto(producto)) {
-			//TODO: Throw exception due to modifying nonexisting product
+			// TODO: Throw exception due to modifying nonexisting product
 		}
 		if (cantidad <= 0) {
 			// TODO: Throw exception due to invalid amount
@@ -147,7 +154,7 @@ public class Comanda {
 		if (cantidad > producto.unidadesDisponibles() + cantidad(producto)) {
 			// TODO: Throw exception due to invalid amount
 		}
-		
+
 		// Actualiza el stock disponible de acuerdo a la nueva cantidad utilizada
 		producto.modificarStock(producto.unidadesDisponibles() + cantidad(producto) - cantidad);
 		productos().put(producto, cantidad);
