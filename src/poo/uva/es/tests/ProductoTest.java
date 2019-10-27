@@ -8,8 +8,7 @@ import poo.uva.es.informaticafe.Producto;
  * Coleccion de tests para la clase Producto
  * @author carlgom
  * @author migrase
- * @author 
- *
+ * @author manmend
  */
 public class ProductoTest {
 
