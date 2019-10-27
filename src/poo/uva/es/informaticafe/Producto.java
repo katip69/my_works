@@ -99,7 +99,7 @@ public class Producto {
 	 * 
 	 * @param stock cantidad de unidades del producto a aumentar
 	 */
-	private void modificarStock(int stock) {
+	public void modificarStock(int stock) {
 		if (stock < 0) {
 			// implementar excepción
 		}
