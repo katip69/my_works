@@ -8,8 +8,9 @@ import poo.uva.es.informaticafe.Producto;
 /**
  * implementacion de una orden de productos para un comensal
  * 
- * @author rasero99, carlgom
- *
+ * @author migrase
+ * @author carlgom
+ * @author manmend
  */
 
 public class Comanda {
