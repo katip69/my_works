@@ -4,6 +4,13 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import poo.uva.es.informaticafe.Producto;
 
+/**
+ * Coleccion de tests para la clase Producto
+ * @author carlgom
+ * @author migrase
+ * @author 
+ *
+ */
 public class ProductoTest {
 
 	@Test
@@ -17,6 +24,7 @@ public class ProductoTest {
 
 		assertEquals(nombre, manzana.nombre());
 		assertEquals(descripcion, manzana.descripcion());
+		//Asumimos que un producto no tendra una precision por debajo de 1 centimo
 		assertEquals(precio, manzana.precio(), 0.001);
 		assertEquals(cantidad, manzana.unidadesDisponibles());
 	}
