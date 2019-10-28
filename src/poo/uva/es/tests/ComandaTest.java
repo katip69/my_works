@@ -41,13 +41,6 @@ public class ComandaTest {
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void hashMapSinInicializar() {
-		HashMap<Producto, Integer> productos;
-
-		Comanda comanda = new Comanda(productos);
-	}
-
-	@Test(expected = IllegalArgumentException.class)
 	public void hashMapConCantidadesInvalidas() {
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
 
