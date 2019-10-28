@@ -30,9 +30,9 @@ public class ComandaTest {
 	public void comandaValidaDesdeHashMap() {
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
 
-		productos.put(new Producto("Manzana", "", 2.3), 1);
-		productos.put(new Producto("Pera", "", 2.1), 3);
-		productos.put(new Producto("Platano", "", 1.7), 5);
+		productos.put(new Producto("Manzana", "", 2.3, 5), 1);
+		productos.put(new Producto("Pera", "", 2.1, 5), 3);
+		productos.put(new Producto("Platano", "", 1.7, 5), 5);
 
 		Comanda comanda = new Comanda(productos);
 		assertEquals(productos.size(), comanda.productos().size());
@@ -65,7 +65,7 @@ public class ComandaTest {
 	@Test
 	public void tieneProducto() {
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
-		Producto manzana = new Producto("Manzana", "", 2.3);
+		Producto manzana = new Producto("Manzana", "", 2.3, 2);
 
 		productos.put(manzana, 1);
 
@@ -77,8 +77,8 @@ public class ComandaTest {
 	@Test
 	public void noTieneProducto() {
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
-		Producto manzana = new Producto("Manzana", "", 2.3);
-		Producto pera = new Producto("Pera", "", 2.1);
+		Producto manzana = new Producto("Manzana", "", 2.3, 5);
+		Producto pera = new Producto("Pera", "", 2.1, 5);
 
 		productos.put(manzana, 1);
 
