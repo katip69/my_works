@@ -36,6 +36,16 @@ public class Comanda {
 	 * @param productos lista de productos que solicita el cliente
 	 */
 	public Comanda(HashMap<Producto, Integer> productos) {
+		for (Map.Entry<Producto, Integer> par : productos.entrySet()) {
+			if (par.getValue() <= 0) {
+				throw new IllegalArgumentException(
+						"La cantidad de producto " + par.getKey() + " no puede ser negativo.");
+			}
+			if (par.getKey().unidadesDisponibles() < par.getValue()) {
+				throw new IllegalArgumentException(
+						"La cantidad del producto " + par.getKey() + " no puede ser mayor al stock disponible.");
+			}
+		}
 		fecha = LocalDateTime.now();
 		this.productos = productos;
 		importe = importe();
@@ -93,13 +103,13 @@ public class Comanda {
 	 */
 	public void addProducto(Producto producto, int cantidad) {
 		if (tieneProducto(producto)) {
-			// TODO: Throw exception since the product already exists
+			throw new IllegalArgumentException("El producto ya existe en la comanda.");
 		}
 		if (cantidad <= 0) {
-			// TODO: Throw exception due to invalid amount
+			throw new IllegalArgumentException("La cantidad no puede ser negativa.");
 		}
 		if (cantidad > producto.unidadesDisponibles()) {
-			// TODO: Throw exception due to invalid amount
+			throw new IllegalArgumentException("La cantidad no puede ser mayor al stock disponible.");
 		}
 
 		producto.reducirStock(cantidad);
@@ -132,7 +142,7 @@ public class Comanda {
 	 */
 	public int cantidad(Producto producto) {
 		if (!tieneProducto(producto)) {
-			// TODO: Throw exception due to invalid product
+			throw new IllegalArgumentException("El producto no existe en la comanda.");
 		}
 
 		return productos().get(producto);
@@ -147,13 +157,13 @@ public class Comanda {
 	 */
 	public void modificaProducto(Producto producto, int cantidad) {
 		if (!tieneProducto(producto)) {
-			// TODO: Throw exception due to modifying nonexisting product
+			throw new IllegalArgumentException("El producto no existe en la comanda.");
 		}
 		if (cantidad <= 0) {
-			// TODO: Throw exception due to invalid amount
+			throw new IllegalArgumentException("La cantidad no puede ser negativa.");
 		}
 		if (cantidad > producto.unidadesDisponibles() + cantidad(producto)) {
-			// TODO: Throw exception due to invalid amount
+			throw new IllegalArgumentException("La cantidad no puede ser mayor al stock disponible.");
 		}
 
 		// Actualiza el stock disponible de acuerdo a la nueva cantidad utilizada
