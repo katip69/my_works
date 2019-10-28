@@ -127,13 +127,86 @@ public class ComandaTest {
 
 		comanda.addProducto(manzana, 2);
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void addProductoSinStockSuficiente() {
 		Producto pera = new Producto("Pera", "", 2.1, 5);
 
-		Comanda comanda = new Comanda(productos);
+		Comanda comanda = new Comanda();
 
 		comanda.addProducto(pera, 8);
 	}
+
+	@Test
+	public void removeProductoValido() {
+		Producto pera = new Producto("Pera", "", 2.1, 5);
+
+		Comanda comanda = new Comanda();
+
+		comanda.addProducto(pera, 3);
+
+		comanda.removeProducto(pera);
+
+		assertFalse(comanda.tieneProducto(pera));
+		assertEquals(5, pera.unidadesDisponibles());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void removeProductoInexistente() {
+		Producto pera = new Producto("Pera", "", 2.1, 5);
+
+		Comanda comanda = new Comanda();
+
+		comanda.removeProducto(pera);
+
+	}
+
+	@Test
+	public void modificaProductoValido() {
+		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
+		Producto pera = new Producto("Pera", "", 2.1, 5);
+
+		Comanda comanda = new Comanda(productos);
+
+		comanda.addProducto(pera, 3);
+		comanda.modificaProducto(pera, 4);
+
+		assertTrue(comanda.tieneProducto(pera));
+		assertEquals(1, pera.unidadesDisponibles());
+		assertEquals(4, comanda.cantidad(pera));
+
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void modificaProductoInnvalido() {
+		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
+		Producto pera = new Producto("Pera", "", 2.1, 5);
+
+		Comanda comanda = new Comanda(productos);
+
+		comanda.addProducto(pera, 3);
+		comanda.modificaProducto(pera, -2);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void modificaProductoInexistente() {
+		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
+		Producto manzana = new Producto("Manzana", "", 2.3, 5);
+
+		Comanda comanda = new Comanda();
+
+		comanda.modificaProducto(manzana, 2);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void modificaProductoSinStockSuficiente() {
+		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
+		Producto pera = new Producto("Pera", "", 2.1, 5);
+
+		Comanda comanda = new Comanda(productos);
+
+		comanda.addProducto(pera, 3);
+		comanda.modificaProducto(pera, 6);
+	}
+
 }
