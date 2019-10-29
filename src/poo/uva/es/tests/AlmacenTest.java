@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
 /**
- * Colección de test de la clase Almacen
+ * Colección de test de la clase Almacen 
  * 
  * @author manmend
  * @author carlgom

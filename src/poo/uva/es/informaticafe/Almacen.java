@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import poo.uva.es.informaticafe.Producto;
 
 /**
- * La clase {@link Almacen} es una implementacion de un sistema de inventario.
+ * La clase {@link Almacen} es una implementacion de un sistema de inventario .
  * <p>
  * Permite la gestion de productos y las cantidades disponibles de estos.
  * 
