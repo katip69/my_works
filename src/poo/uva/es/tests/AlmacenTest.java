@@ -4,9 +4,8 @@ import org.junit.Test;
 import poo.uva.es.informaticafe.Producto;
 import poo.uva.es.informaticafe.Almacen;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
+
 
 /**
  * Colección de test de la clase Almacen 
@@ -39,7 +38,6 @@ public class AlmacenTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void stockIncrementadoNulo() {
 		Producto pera = new Producto("Pera", "Fruta", 2.0);
-		int aumento = 0;
 		Almacen prueba = new Almacen();
 		prueba.incrementarStock(pera, 0);
 	}
@@ -48,24 +46,23 @@ public class AlmacenTest {
 	public void stockIncrementadoProductoNoExiste() {
 		Producto pera = new Producto("Pera", "Fruta", 2.0);
 		Almacen prueba = new Almacen();
-		prueba.creaProducto(pera);
-		prueba.incrementarStock(null, 3);
+		prueba.incrementarStock(pera, 3);
 	}
 
 	@Test
 	public void stockIncrementadoCorrecto() {
-		Producto pera = new Producto("Pera", "Fruta", 2.0);
+		Producto pera = new Producto("Pera", "Fruta", 2.0,0);
 		Almacen prueba = new Almacen();
 		prueba.creaProducto(pera);
 		prueba.incrementarStock(pera, 2);
+		assertEquals(2,pera.unidadesDisponibles());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void stockReducidoProductoNoExiste() {
 		Producto pera = new Producto("Pera", "Fruta", 2.0,3);
 		Almacen prueba = new Almacen();
-		prueba.creaProducto(pera);
-		prueba.removerStock(null, 2);
+		prueba.removerStock(pera, 2);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -96,9 +93,9 @@ public class AlmacenTest {
 	}
 	@Test(expected = IllegalArgumentException.class)
 	public void eliminarProductoNoExiste() {
-
+		Producto pera = new Producto("Pera", "Fruta", 2.0, 6);
 		Almacen prueba = new Almacen();
-		prueba.eliminar(null);
+		prueba.eliminar(pera);
 
 	}
 	@Test
@@ -107,12 +104,13 @@ public class AlmacenTest {
 		Almacen prueba = new Almacen();
 		prueba.creaProducto(pera);
 		prueba.eliminar(pera);
-		assertEquals(null,prueba.existe(pera));
+		assertEquals(false,prueba.existe(pera));
 
 	}
 	@Test(expected = IllegalArgumentException.class)
 	public void cantidadProductoNoExiste() {
 		Almacen prueba = new Almacen();
-		prueba.cantidad(null);
+		Producto pera = new Producto("Pera", "Fruta", 2.0, 6);
+		prueba.cantidad(pera);
 	}
 }
