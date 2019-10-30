@@ -28,6 +28,18 @@ public class ComandaTest {
 	}
 
 	@Test
+	public void importe() {
+		Comanda comanda = new Comanda();
+		comanda.addProducto(new Producto("Pera", "", 1.4, 99), 1);
+		comanda.addProducto(new Producto("Manzana", "", 1.7, 99), 2);
+		comanda.addProducto(new Producto("Platano", "", 0.52, 99), 4);
+		comanda.addProducto(new Producto("Tomate", "", 2.38, 99), 7);
+
+		double importe = 1.4 + 2 * 1.7 + 4 * 0.52 + 7 * 2.38;
+		assertEquals(importe, comanda.importe(), 0.001);
+	}
+
+	@Test
 	public void tieneProducto() {
 		Producto manzana = new Producto("Manzana", "", 2.3, 2);
 
