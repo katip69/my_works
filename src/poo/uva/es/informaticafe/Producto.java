@@ -3,8 +3,10 @@ package poo.uva.es.informaticafe;
 /**
  * Gestión y control de los productos.
  * 
- * @author rasero99
- *
+ * @author carlgom
+ * @author manmend
+ * @author migrase
+ * @version 1.0
  */
 public class Producto {
 
