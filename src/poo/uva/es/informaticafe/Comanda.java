@@ -32,28 +32,6 @@ public class Comanda {
 	}
 
 	/**
-	 * Crea una comanda
-	 * 
-	 * @param productos lista de productos que solicita el cliente
-	 */
-	public Comanda(HashMap<Producto, Integer> productos) {
-		for (Map.Entry<Producto, Integer> par : productos.entrySet()) {
-			if (par.getValue() <= 0) {
-				throw new IllegalArgumentException(
-						"La cantidad de producto " + par.getKey() + " no puede ser negativo.");
-			}
-			if (par.getKey().unidadesDisponibles() < par.getValue()) {
-				throw new IllegalArgumentException(
-						"La cantidad del producto " + par.getKey() + " no puede ser mayor al stock disponible.");
-			}
-		}
-		fecha = LocalDateTime.now();
-		this.productos = productos;
-		importe = importe();
-
-	}
-
-	/**
 	 * Devuelve un HashMap con todos los productos y sus cantidades pertenecientes a
 	 * la comanda.
 	 * 
