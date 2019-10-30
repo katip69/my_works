@@ -113,4 +113,12 @@ public class AlmacenTest {
 		Producto pera = new Producto("Pera", "Fruta", 2.0, 6);
 		prueba.cantidad(pera);
 	}
+	@Test
+	public void cantidadProductoExiste() {
+		Almacen prueba = new Almacen();
+		Producto pera = new Producto("Pera", "Fruta", 2.0, 6);
+		prueba.creaProducto(pera);
+		assertEquals(6,prueba.cantidad(pera));
+	}
+	
 }
