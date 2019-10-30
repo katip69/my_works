@@ -23,8 +23,7 @@ public class ComandaTest {
 	@Test
 	public void comandaValida() {
 		Comanda comanda = new Comanda();
-		assertEquals(0, comanda.productos().size());
-		assertEquals(0, comanda.importe(), 0.001);
+		assertTrue(comanda.vacia();
 	}
 
 	@Test
