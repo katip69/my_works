@@ -14,8 +14,9 @@ import static org.junit.Assert.assertFalse;
  * Coleccion de tests para la clase Comanda
  * 
  * @author carlgom
- * @author migrase
  * @author manmend
+ * @author migrase
+ * @version 1.0
  */
 public class ComandaTest {
 

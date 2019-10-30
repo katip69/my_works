@@ -6,9 +6,11 @@ import poo.uva.es.informaticafe.Producto;
 
 /**
  * Coleccion de tests para la clase Producto
+ * 
  * @author carlgom
- * @author migrase
  * @author manmend
+ * @author migrase
+ * @version 1.0
  */
 public class ProductoTest {
 
@@ -23,7 +25,7 @@ public class ProductoTest {
 
 		assertEquals(nombre, manzana.nombre());
 		assertEquals(descripcion, manzana.descripcion());
-		//Asumimos que un producto no tendra una precision por debajo de 1 centimo
+		// Asumimos que un producto no tendra una precision por debajo de 1 centimo
 		assertEquals(precio, manzana.precio(), 0.001);
 		assertEquals(cantidad, manzana.unidadesDisponibles());
 	}
@@ -44,7 +46,7 @@ public class ProductoTest {
 	public void nuevoProductoConStockInvalido() {
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", 0.56, -3);
 	}
-	
+
 	@Test
 	public void nuevoPrecio() {
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", 0.56);
