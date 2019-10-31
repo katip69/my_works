@@ -8,9 +8,10 @@ import poo.uva.es.informaticafe.Producto;
 /**
  * implementacion de una orden de productos para un comensal
  * 
- * @author migrase
  * @author carlgom
  * @author manmend
+ * @author migrase
+ * @version 1.0
  */
 
 public class Comanda {
@@ -30,40 +31,17 @@ public class Comanda {
 		importe = 0;
 	}
 
-	/**
-	 * Crea una comanda
-	 * 
-	 * @param productos lista de productos que solicita el cliente
-	 */
-	public Comanda(HashMap<Producto, Integer> productos) {
-		for (Map.Entry<Producto, Integer> par : productos.entrySet()) {
-			if (par.getValue() <= 0) {
-				throw new IllegalArgumentException(
-						"La cantidad de producto " + par.getKey() + " no puede ser negativo.");
-			}
-			if (par.getKey().unidadesDisponibles() < par.getValue()) {
-				throw new IllegalArgumentException(
-						"La cantidad del producto " + par.getKey() + " no puede ser mayor al stock disponible.");
-			}
-		}
-		fecha = LocalDateTime.now();
-		this.productos = productos;
-		importe = importe();
-
-	}
-
-	/**
-	 * Devuelve un HashMap con todos los productos y sus cantidades pertenecientes a
-	 * la comanda.
-	 * 
-	 * @return pares producto-cantidad contenidos en la comanda
-	 */
-	public HashMap<Producto, Integer> productos() {
+	private HashMap<Producto, Integer> productos() {
 		// TODO: This might break things if they modify it. Check with Felix
 		return productos;
 	}
 
-	private void updateImporte() {
+	/**
+	 * Calcula el precio total de la comanda actual.
+	 * 
+	 * @return Valor del importe de la comanda
+	 */
+	public double importe() {
 		double importe = 0;
 
 		// Itera sobre los pares HashMap creando un Map individual por cada par
@@ -72,16 +50,6 @@ public class Comanda {
 			importe += par.getKey().precio() * par.getValue();
 		}
 
-		this.importe = importe;
-	}
-
-	/**
-	 * Calcula el precio total de la comanda actual.
-	 * 
-	 * @return Valor (en euros) de la comanda
-	 */
-	public double importe() {
-		updateImporte(); // Asegura que el importe es correcto
 		return importe;
 	}
 
@@ -170,6 +138,15 @@ public class Comanda {
 		producto.modificarStock(producto.unidadesDisponibles() + cantidad(producto) - cantidad);
 		productos().put(producto, cantidad);
 
+	}
+	
+	/**
+	 * Comprueba si la comanda esta vacia.
+	 * 
+	 * @return true si la comanda no tiene productos, false en caso contrario.
+	 */
+	public boolean vacia() {
+		return productos().isEmpty();
 	}
 
 }

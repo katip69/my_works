@@ -15,35 +15,31 @@ import poo.uva.es.informaticafe.Producto;
  */
 public class Almacen {
 
-	private ArrayList <Producto> inventario;
+	private ArrayList<Producto> inventario;
 
 	/**
 	 * Constructor por defecto de la clase {@link Almacen}. Genera un inventario
 	 * vacio.
 	 */
 	public Almacen() {
-		inventario = new ArrayList <Producto>();
+		inventario = new ArrayList<Producto>();
 	}
 
 	/**
 	 * Crea un {@code Producto} en el almacen.
 	 * 
-	 * @param producto
-	 *            Nombre del producto que se quiere inventariar
+	 * @param producto Nombre del producto que se quiere inventariar
 	 */
 	public void creaProducto(Producto producto) {
 		inventario.add(producto);
 	}
 
-	
 	/**
 	 * Incrementa la cantidad de un producto en el almacen.
 	 * 
 	 * 
-	 * @param producto
-	 *            Producto del que se quiere aumentar stock
-	 * @param stock
-	 *            cantidad a aumentar (ha de ser mayor que 0)
+	 * @param producto Producto del que se quiere aumentar stock
+	 * @param stock    cantidad a aumentar (ha de ser mayor que 0)
 	 */
 	public void incrementarStock(Producto producto, int stock) {
 		if (stock <= 0) {
@@ -61,10 +57,8 @@ public class Almacen {
 	 * Decrementa la cantidad de un producto en el almacen.
 	 * 
 	 * 
-	 * @param producto
-	 *            Producto del que se quiere remover stock
-	 * @param stock
-	 *            cantidad a reducir (ha de ser mayor que 0)
+	 * @param producto Producto del que se quiere remover stock
+	 * @param stock    cantidad a reducir (ha de ser mayor que 0)
 	 */
 	public void removerStock(Producto producto, int stock) {
 		if (stock <= 0) {
@@ -85,8 +79,7 @@ public class Almacen {
 	/**
 	 * Elimina un producto del almacen.
 	 * 
-	 * @param producto
-	 *            Nombre del producto a eliminar
+	 * @param producto Nombre del producto a eliminar
 	 */
 	public void eliminar(Producto producto) {
 		if (!existe(producto)) {
@@ -99,8 +92,7 @@ public class Almacen {
 	/**
 	 * Comprueba la existencia de un producto en el almacen.
 	 * 
-	 * @param producto
-	 *            Producto del que se quiere comprobar si existe en el almacen
+	 * @param producto Producto del que se quiere comprobar si existe en el almacen
 	 * @return true si el producto existe en el almacen, false en caso contrario
 	 */
 	public boolean existe(Producto producto) {
@@ -110,8 +102,7 @@ public class Almacen {
 	/**
 	 * Obtiene la cantidad en stock de un producto en el almacen.
 	 * 
-	 * @param producto
-	 *            Producto del que se quiere comprobar el stock
+	 * @param producto Producto del que se quiere comprobar el stock
 	 * @return Cantidad de stock disponible del producto
 	 */
 	public int cantidad(Producto producto) {
@@ -120,12 +111,14 @@ public class Almacen {
 		}
 		return producto.unidadesDisponibles();
 	}
+
 	/**
 	 * 
-	 * @return {@code True} si el almacen esta vacío, {@code False} en caso contrario
+	 * @return {@code True} si el almacen esta vacío, {@code False} en caso
+	 *         contrario
 	 */
 	public boolean vacio() {
-		
+
 		return inventario.isEmpty();
 	}
 }
