@@ -30,6 +30,7 @@ public class Comanda {
 		productos = new HashMap<Producto, Integer>();
 		importe = 0;
 	}
+  
 	/**
 	 * Constructor de comanda con parametros
 	 * @param estado el estado en el que se encuentra la comanda
@@ -51,6 +52,7 @@ public class Comanda {
 		this.productos=productos;
 	}
 	/**
+
 	 * Getter del estado
 	 * @return devuelve el estado del pedido
 	 */
