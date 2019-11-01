@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
 /**
- * Coleccion de tests para la clase Comanda
+ * Coleccion de tests para la clase Comanda 
  * 
  * @author carlgom
  * @author manmend

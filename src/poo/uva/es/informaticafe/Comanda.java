@@ -6,7 +6,7 @@ import java.util.Map;
 import poo.uva.es.informaticafe.Producto;
 
 /**
- * implementacion de una orden de productos para un comensal
+ * implementacion de una orden de productos para un comensal 
  * 
  * @author carlgom
  * @author manmend
