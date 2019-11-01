@@ -1,4 +1,5 @@
 package poo.uva.es.informaticafe;
+import java.util.ArrayList;
 
 /**
  * 
@@ -8,5 +9,8 @@ package poo.uva.es.informaticafe;
  * @version 1.0
  */
 public class TPV {
+	
+	private Comanda comanda;
+	private ArrayList<Comanda> comandas;
 
 }
