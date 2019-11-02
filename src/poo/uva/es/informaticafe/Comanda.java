@@ -6,7 +6,7 @@ import java.util.Map;
 import poo.uva.es.informaticafe.Producto;
 
 /**
- * implementacion de una orden de productos para un comensal
+ * implementacion de una orden de productos para un comensal 
  * 
  * @author carlgom
  * @author manmend
@@ -30,6 +30,35 @@ public class Comanda {
 		productos = new HashMap<Producto, Integer>();
 		importe = 0;
 	}
+  
+	/**
+	 * Constructor de comanda con parametros
+	 * @param estado el estado en el que se encuentra la comanda
+	 * @param fecha la fecha en la que se pidio la comanda
+	 * @param importe importe de la comanda
+	 * @param productos productos 
+	 */
+	public Comanda(int estado, LocalDateTime fecha, HashMap<Producto,Integer> productos) {
+		if (estado<0) {
+			throw new IllegalArgumentException("El estado de la comanda debe ser un número entre 0 y 4");
+		}
+		if(estado>=4) {
+			throw new IllegalArgumentException("El estado de la comanda debe ser un número entre 0 y 4");
+		}
+		
+		this.estado=estado;
+		this.fecha=fecha;
+		
+		this.productos=productos;
+	}
+	/**
+
+	 * Getter del estado
+	 * @return devuelve el estado del pedido
+	 */
+	public int getEstado() {
+		return estado;
+	}
 
 	private HashMap<Producto, Integer> productos() {
 		// TODO: This might break things if they modify it. Check with Felix
@@ -41,7 +70,7 @@ public class Comanda {
 	 * 
 	 * @return Valor del importe de la comanda
 	 */
-	public double importe() {
+	 public double importe() {
 		double importe = 0;
 
 		// Itera sobre los pares HashMap creando un Map individual por cada par
@@ -93,7 +122,7 @@ public class Comanda {
 	 */
 	public void removeProducto(Producto producto) {
 		if (!tieneProducto(producto)) {
-			// TODO: Throw exception due to removing nonexisting product
+			throw new IllegalArgumentException("El producto debe existir.");
 		}
 
 		producto.aumentarStock(cantidad(producto)); // Devuelve el stock usado
@@ -109,7 +138,7 @@ public class Comanda {
 	 * @return cantidad de producto en la comanda
 	 */
 	public int cantidad(Producto producto) {
-		if (!tieneProducto(producto)) {
+		if (tieneProducto(producto)==false) {
 			throw new IllegalArgumentException("El producto no existe en la comanda.");
 		}
 

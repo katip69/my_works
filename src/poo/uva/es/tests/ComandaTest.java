@@ -1,5 +1,6 @@
 package poo.uva.es.tests;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import org.junit.Test;
@@ -11,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
 /**
- * Coleccion de tests para la clase Comanda
+ * Coleccion de tests para la clase Comanda 
  * 
  * @author carlgom
  * @author manmend
@@ -24,6 +25,41 @@ public class ComandaTest {
 	public void comandaValida() {
 		Comanda comanda = new Comanda();
 		assertTrue(comanda.vacia());
+	}
+
+	@Test
+	public void comandaConAtributosValidos() {
+		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
+		LocalDateTime fecha = LocalDateTime.now();
+		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
+		productos.put(manzana, 3);
+		Comanda comanda = new Comanda(3, fecha, productos);
+		double importe = 1 * 3.0;
+
+		assertEquals(3, comanda.getEstado());
+		assertEquals(fecha, LocalDateTime.now());
+		assertEquals(importe, comanda.importe(), 0.001);
+		assertEquals(3, comanda.cantidad(manzana));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void comandaConEstadoInvalido() {
+		int estado = -1;
+		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
+		LocalDateTime fecha = LocalDateTime.now();
+		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
+		productos.put(manzana, 3);
+		Comanda comanda = new Comanda(estado, fecha, productos);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void comandaConEstadoInvalidoPorArriba() {
+		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
+		int estado = 6;
+		LocalDateTime fecha = LocalDateTime.now();
+		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
+		productos.put(manzana, 3);
+		Comanda comanda = new Comanda(estado, fecha, productos);
 	}
 
 	@Test
@@ -154,6 +190,19 @@ public class ComandaTest {
 		Comanda comanda = new Comanda();
 
 		comanda.modificaProducto(manzana, 2);
+	}
+	
+	//FaltaTerminarlo
+	@Test(expected = IllegalArgumentException.class)
+	public void comandaConCantidadSinAñadirElProductoALaComanda() {
+		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
+		Producto pera = new Producto("Pera", "Fruta etc etc", 1.0);
+		int estado = 6;
+		LocalDateTime fecha = LocalDateTime.now();
+		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
+		productos.put(manzana, 3);
+		Comanda comanda = new Comanda(estado, fecha, productos);
+		comanda.tieneProducto(pera);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
