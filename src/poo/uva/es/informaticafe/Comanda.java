@@ -59,6 +59,13 @@ public class Comanda {
 	public int getEstado() {
 		return estado;
 	}
+	/**
+	 * setter del estado
+	 * 
+	 */
+	public void setEstado(int estado) {
+		this.estado=estado;
+	}
 
 	private HashMap<Producto, Integer> productos() {
 		// TODO: This might break things if they modify it. Check with Felix
