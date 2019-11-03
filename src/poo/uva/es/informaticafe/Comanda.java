@@ -6,7 +6,7 @@ import java.util.Map;
 import poo.uva.es.informaticafe.Producto;
 
 /**
- * implementacion de una orden de productos para un comensal 
+ * implementacion de una orden de productos para un comensal
  * 
  * @author carlgom
  * @author manmend
@@ -30,41 +30,57 @@ public class Comanda {
 		productos = new HashMap<Producto, Integer>();
 		importe = 0;
 	}
-  
+
 	/**
 	 * Constructor de comanda con parametros
-	 * @param estado el estado en el que se encuentra la comanda
-	 * @param fecha la fecha en la que se pidio la comanda
-	 * @param importe importe de la comanda
-	 * @param productos productos 
+	 * 
+	 * @param estado
+	 *            el estado en el que se encuentra la comanda
+	 * @param fecha
+	 *            la fecha en la que se pidio la comanda
+	 * @param importe
+	 *            importe de la comanda
+	 * @param productos
+	 *            productos
 	 */
-	public Comanda(int estado, LocalDateTime fecha, HashMap<Producto,Integer> productos) {
-		if (estado<0) {
-			throw new IllegalArgumentException("El estado de la comanda debe ser un número entre 0 y 4");
+	public Comanda(int estado, LocalDateTime fecha, HashMap<Producto, Integer> productos) {
+		if (estado < 0) {
+			throw new IllegalArgumentException("El estado de la comanda debe ser un número entre 0 y 3");
 		}
-		if(estado>=4) {
-			throw new IllegalArgumentException("El estado de la comanda debe ser un número entre 0 y 4");
+		if (estado >= 3) {
+			throw new IllegalArgumentException("El estado de la comanda debe ser un número entre 0 y 3");
 		}
-		
-		this.estado=estado;
-		this.fecha=fecha;
-		
-		this.productos=productos;
-	}
-	/**
 
+		this.estado = estado;
+		this.fecha = fecha;
+
+		this.productos = productos;
+	}
+
+	/**
+	 * Getter de la fecha de la comanda
+	 * @return Devuelve la fecha de la comanda
+	 */
+	public LocalDateTime getFecha() {
+		return fecha;
+	}
+
+	/**
+	 * 
 	 * Getter del estado
+	 * 
 	 * @return devuelve el estado del pedido
 	 */
 	public int getEstado() {
 		return estado;
 	}
+
 	/**
 	 * setter del estado
 	 * 
 	 */
 	public void setEstado(int estado) {
-		this.estado=estado;
+		this.estado = estado;
 	}
 
 	private HashMap<Producto, Integer> productos() {
@@ -77,7 +93,7 @@ public class Comanda {
 	 * 
 	 * @return Valor del importe de la comanda
 	 */
-	 public double importe() {
+	public double importe() {
 		double importe = 0;
 
 		// Itera sobre los pares HashMap creando un Map individual por cada par
@@ -92,18 +108,22 @@ public class Comanda {
 	/**
 	 * Comprueba si un producto espeficidado existe en la comanda
 	 * 
-	 * @param producto Producto a comprobar su existencia
+	 * @param producto
+	 *            Producto a comprobar su existencia
 	 * @return true si existe en la comanda, false en caso contrario
 	 */
 	public boolean tieneProducto(Producto producto) {
+		
 		return productos().containsKey(producto);
 	}
 
 	/**
 	 * Introduce un nuevo producto a la comanda.
 	 * 
-	 * @param producto Producto a introducir en la comanda
-	 * @param cantidad Cantidad de producto a introducir (0 < cantidad < stock)
+	 * @param producto
+	 *            Producto a introducir en la comanda
+	 * @param cantidad
+	 *            Cantidad de producto a introducir (0 < cantidad < stock)
 	 */
 	public void addProducto(Producto producto, int cantidad) {
 		if (tieneProducto(producto)) {
@@ -125,7 +145,8 @@ public class Comanda {
 	 * <p>
 	 * El stock del producto utilizado en la comanda se vuelve disponible de nuevo.
 	 * 
-	 * @param producto producto a remover de la comanda
+	 * @param producto
+	 *            producto a remover de la comanda
 	 */
 	public void removeProducto(Producto producto) {
 		if (!tieneProducto(producto)) {
@@ -141,11 +162,12 @@ public class Comanda {
 	 * Dado un producto, devuelve la cantidad de unidades de ese producto asignadas
 	 * a la comanda.
 	 * 
-	 * @param producto producto del que se quiere comprobar la cantidad
+	 * @param producto
+	 *            producto del que se quiere comprobar la cantidad
 	 * @return cantidad de producto en la comanda
 	 */
 	public int cantidad(Producto producto) {
-		if (tieneProducto(producto)==false) {
+		if (!tieneProducto(producto)) {
 			throw new IllegalArgumentException("El producto no existe en la comanda.");
 		}
 
@@ -156,8 +178,10 @@ public class Comanda {
 	 * Modifica la cantidad de un producto asignada a la comanda.
 	 * <p>
 	 * 
-	 * @param producto producto a remover de la comanda
-	 * @param cantidad nueva cantidad de producto a usar en la comanda
+	 * @param producto
+	 *            producto a remover de la comanda
+	 * @param cantidad
+	 *            nueva cantidad de producto a usar en la comanda
 	 */
 	public void modificaProducto(Producto producto, int cantidad) {
 		if (!tieneProducto(producto)) {
@@ -175,7 +199,7 @@ public class Comanda {
 		productos().put(producto, cantidad);
 
 	}
-	
+
 	/**
 	 * Comprueba si la comanda esta vacia.
 	 * 

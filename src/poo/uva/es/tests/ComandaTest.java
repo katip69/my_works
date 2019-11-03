@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
 /**
- * Coleccion de tests para la clase Comanda 
+ * Coleccion de tests para la clase Comanda
  * 
  * @author carlgom
  * @author manmend
@@ -44,22 +44,53 @@ public class ComandaTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void comandaConEstadoInvalido() {
-		int estado = -1;
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
 		LocalDateTime fecha = LocalDateTime.now();
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
 		productos.put(manzana, 3);
-		Comanda comanda = new Comanda(estado, fecha, productos);
+		Comanda comanda = new Comanda(-1, fecha, productos);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void comandaConEstadoInvalidoPorArriba() {
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
-		int estado = 6;
 		LocalDateTime fecha = LocalDateTime.now();
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
 		productos.put(manzana, 3);
-		Comanda comanda = new Comanda(estado, fecha, productos);
+		Comanda comanda = new Comanda(3, fecha, productos);
+	}
+
+	@Test
+	public void getEstado() {
+		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
+		LocalDateTime fecha = LocalDateTime.now();
+		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
+		productos.put(manzana, 3);
+		Comanda comanda = new Comanda(0, fecha, productos);
+		assertEquals(0, comanda.getEstado());
+
+	}
+
+	@Test
+	public void getFecha() {
+		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
+		LocalDateTime fecha = LocalDateTime.now();
+		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
+		productos.put(manzana, 3);
+		Comanda comanda = new Comanda(0, fecha, productos);
+		assertEquals(LocalDateTime.now(), comanda.getFecha());
+
+	}
+	@Test
+	public void setEstado() {
+		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
+		LocalDateTime fecha = LocalDateTime.now();
+		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
+		productos.put(manzana, 3);
+		Comanda comanda = new Comanda(0, fecha, productos);
+		comanda.setEstado(2);
+		assertEquals(2,comanda.getEstado());
+		
 	}
 
 	@Test
@@ -85,13 +116,13 @@ public class ComandaTest {
 		assertTrue(comanda.tieneProducto(manzana));
 	}
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void noTieneProducto() {
 		Producto manzana = new Producto("Manzana", "", 2.3, 5);
 
 		Comanda comanda = new Comanda();
 
-		assertFalse(comanda.tieneProducto(manzana));
+		comanda.tieneProducto(manzana);
 	}
 
 	@Test
@@ -191,8 +222,8 @@ public class ComandaTest {
 
 		comanda.modificaProducto(manzana, 2);
 	}
-	
-	//FaltaTerminarlo
+
+	// FaltaTerminarlo
 	@Test(expected = IllegalArgumentException.class)
 	public void comandaConCantidadSinAñadirElProductoALaComanda() {
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
