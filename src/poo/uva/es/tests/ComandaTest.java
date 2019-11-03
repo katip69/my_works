@@ -32,10 +32,10 @@ public class ComandaTest {
 		LocalDate fecha = LocalDate.now();
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
 		productos.put(manzana, 3);
-		Comanda comanda = new Comanda(3, fecha, productos);
+		Comanda comanda = new Comanda(2, fecha, productos);
 		double importe = 1 * 3.0;
 
-		assertEquals(3, comanda.getEstado());
+		assertEquals(2, comanda.getEstado());
 		assertEquals(fecha, LocalDate.now());
 		assertEquals(importe, comanda.importe(), 0.001);
 		assertEquals(3, comanda.cantidad(manzana));
@@ -255,17 +255,17 @@ public class ComandaTest {
 		comanda.modificaProducto(manzana, 2);
 	}
 
-	// FaltaTerminarlo
+
 	@Test(expected = IllegalArgumentException.class)
 	public void comandaConCantidadSinAñadirElProductoALaComanda() {
-		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
-		Producto pera = new Producto("Pera", "Fruta etc etc", 1.0);
-		int estado = 6;
-		LocalDate fecha = LocalDate.now();
-		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
-		productos.put(manzana, 3);
-		Comanda comanda = new Comanda(estado, fecha, productos);
-		comanda.tieneProducto(pera);
+		Producto manzana = new Producto("Pera", "", 2.1, 5);
+		Producto pera = new Producto("Pera", "", 2.1, 5);
+
+		Comanda comanda = new Comanda();
+
+		comanda.addProducto(manzana, 3);
+
+		comanda.cantidad(pera);
 	}
 
 	@Test(expected = IllegalArgumentException.class)

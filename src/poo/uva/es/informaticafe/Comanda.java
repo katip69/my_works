@@ -237,5 +237,7 @@ public class Comanda {
 	public boolean vacia() {
 		return productos().isEmpty();
 	}
+	
+	
 
 }
