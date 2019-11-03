@@ -6,7 +6,7 @@ import poo.uva.es.informaticafe.Producto;
 /**
  * La clase {@link Almacen} es una implementacion de un sistema de inventario .
  * <p>
- * Permite la gestion de productos y las cantidades disponibles de estos.
+ * Permite la gestión de productos y las cantidades disponibles de estos.
  * 
  * @author carlgom
  * @author manmend
@@ -19,14 +19,14 @@ public class Almacen {
 
 	/**
 	 * Constructor por defecto de la clase {@link Almacen}. Genera un inventario
-	 * vacio.
+	 * vacío.
 	 */
 	public Almacen() {
 		inventario = new ArrayList<Producto>();
 	}
 
 	/**
-	 * Crea un {@code Producto} en el almacen.
+	 * Crea un {@code Producto} en el almacén.
 	 * 
 	 * @param producto Nombre del producto que se quiere inventariar
 	 */
@@ -40,6 +40,8 @@ public class Almacen {
 	 * 
 	 * @param producto Producto del que se quiere aumentar stock
 	 * @param stock    cantidad a aumentar (ha de ser mayor que 0)
+	 * @throws IllegalArgumentException cuando el stock es menor que 0.
+	 * @throws IllegalArgumentException cuando el producto no existe
 	 */
 	public void incrementarStock(Producto producto, int stock) {
 		if (stock <= 0) {
@@ -59,6 +61,9 @@ public class Almacen {
 	 * 
 	 * @param producto Producto del que se quiere remover stock
 	 * @param stock    cantidad a reducir (ha de ser mayor que 0)
+	 * @throws IllegalArgumentException cuando el stock es menor que 0
+	 * @throws IllegalArgumentException cuando el producto no existe
+	 * @throws IllegalArgumentException cuando no hay suficiente stock
 	 */
 	public void removerStock(Producto producto, int stock) {
 		if (stock <= 0) {
@@ -80,6 +85,7 @@ public class Almacen {
 	 * Elimina un producto del almacen.
 	 * 
 	 * @param producto Nombre del producto a eliminar
+	 * @throws IllegalArgumentException cuando el producto no existe
 	 */
 	public void eliminar(Producto producto) {
 		if (!existe(producto)) {
@@ -104,6 +110,7 @@ public class Almacen {
 	 * 
 	 * @param producto Producto del que se quiere comprobar el stock
 	 * @return Cantidad de stock disponible del producto
+	 * @throws IllegalArgumentException cuando el producto no existe
 	 */
 	public int cantidad(Producto producto) {
 		if (!existe(producto)) {

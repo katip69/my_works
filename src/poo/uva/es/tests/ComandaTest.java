@@ -1,6 +1,6 @@
 package poo.uva.es.tests;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.HashMap;
 
 import org.junit.Test;
@@ -30,14 +30,14 @@ public class ComandaTest {
 	@Test
 	public void comandaConAtributosValidos() {
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
-		LocalDateTime fecha = LocalDateTime.now();
+		LocalDate fecha = LocalDate.now();
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
 		productos.put(manzana, 3);
 		Comanda comanda = new Comanda(3, fecha, productos);
 		double importe = 1 * 3.0;
 
 		assertEquals(3, comanda.getEstado());
-		assertEquals(fecha, LocalDateTime.now());
+		assertEquals(fecha, LocalDate.now());
 		assertEquals(importe, comanda.importe(), 0.001);
 		assertEquals(3, comanda.cantidad(manzana));
 	}
@@ -45,7 +45,7 @@ public class ComandaTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void comandaConEstadoInvalido() {
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
-		LocalDateTime fecha = LocalDateTime.now();
+		LocalDate fecha = LocalDate.now();
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
 		productos.put(manzana, 3);
 		Comanda comanda = new Comanda(-1, fecha, productos);
@@ -54,7 +54,7 @@ public class ComandaTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void comandaConEstadoInvalidoPorArriba() {
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
-		LocalDateTime fecha = LocalDateTime.now();
+		LocalDate fecha = LocalDate.now();
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
 		productos.put(manzana, 3);
 		Comanda comanda = new Comanda(3, fecha, productos);
@@ -63,7 +63,7 @@ public class ComandaTest {
 	@Test
 	public void getEstado() {
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
-		LocalDateTime fecha = LocalDateTime.now();
+		LocalDate fecha = LocalDate.now();
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
 		productos.put(manzana, 3);
 		Comanda comanda = new Comanda(0, fecha, productos);
@@ -74,22 +74,53 @@ public class ComandaTest {
 	@Test
 	public void getFecha() {
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
-		LocalDateTime fecha = LocalDateTime.now();
+		LocalDate fecha = LocalDate.now();
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
 		productos.put(manzana, 3);
 		Comanda comanda = new Comanda(0, fecha, productos);
-		assertEquals(LocalDateTime.now(), comanda.getFecha());
+		assertEquals(LocalDate.now(), comanda.getFecha());
 
 	}
 	@Test
 	public void setEstado() {
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
-		LocalDateTime fecha = LocalDateTime.now();
+		LocalDate fecha = LocalDate.now();
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
 		productos.put(manzana, 3);
 		Comanda comanda = new Comanda(0, fecha, productos);
 		comanda.setEstado(2);
 		assertEquals(2,comanda.getEstado());
+		
+	}
+	@Test(expected = IllegalArgumentException.class)
+	public void setEstadoInferiorA0() {
+		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
+		LocalDate fecha = LocalDate.now();
+		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
+		productos.put(manzana, 3);
+		Comanda comanda = new Comanda(0, fecha, productos);
+		comanda.setEstado(-2);
+		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void setEstadoInferiorMayorQue2() {
+		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
+		LocalDate fecha = LocalDate.now();
+		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
+		productos.put(manzana, 3);
+		Comanda comanda = new Comanda(0, fecha, productos);
+		comanda.setEstado(3);
+		
+	}
+	@Test(expected = IllegalArgumentException.class)
+	public void setEstadoIgual() {
+		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
+		LocalDate fecha = LocalDate.now();
+		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
+		productos.put(manzana, 3);
+		Comanda comanda = new Comanda(0, fecha, productos);
+		comanda.setEstado(0);
 		
 	}
 
@@ -229,7 +260,7 @@ public class ComandaTest {
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
 		Producto pera = new Producto("Pera", "Fruta etc etc", 1.0);
 		int estado = 6;
-		LocalDateTime fecha = LocalDateTime.now();
+		LocalDate fecha = LocalDate.now();
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
 		productos.put(manzana, 3);
 		Comanda comanda = new Comanda(estado, fecha, productos);

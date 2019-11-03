@@ -1,12 +1,20 @@
 package poo.uva.es.informaticafe;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+
 import java.util.HashMap;
 import java.util.Map;
 import poo.uva.es.informaticafe.Producto;
 
 /**
- * implementacion de una orden de productos para un comensal
+ * La clase {@link Comanda} nos permite crear nuevas comandas, que se compondra de una fecha (en formato año-mes-día),
+ * un diccionario de {@code Productos} y {@code Integers} y un número entero que será el precio de la comanda.
+ * Además nos permite conocer la lista de productos que la forman, sus cantidades, el importe total de la comanda,
+ * modificar las cantidades de los productos, eliminar productos de las comandas y añadir un producto con su 
+ * correspondiente cantidad.
+ * 
+ * El estado será un número entre 0 y 2, ambos inclusives, de tal manera que el 0 sea que la comanda está anulada,
+ * 1 que la comanda está cerrada, y 2 que la comanda está pagada.
  * 
  * @author carlgom
  * @author manmend
@@ -17,38 +25,40 @@ import poo.uva.es.informaticafe.Producto;
 public class Comanda {
 
 	private int estado;
-	private LocalDateTime fecha;
+	private LocalDate fecha;
 	private double importe;
 	private HashMap<Producto, Integer> productos;
 
 	/**
-	 * Crea una comanda vacía
+	 * Crea una comanda vacía sin atributos
 	 */
 
 	public Comanda() {
-		fecha = LocalDateTime.now();
+		fecha = LocalDate.now();
 		productos = new HashMap<Producto, Integer>();
 		importe = 0;
 	}
 
 	/**
-	 * Constructor de comanda con parametros
+	 * Constructor de comanda con atributos
 	 * 
 	 * @param estado
 	 *            el estado en el que se encuentra la comanda
 	 * @param fecha
-	 *            la fecha en la que se pidio la comanda
+	 *            la fecha en la que se pidio la comanda, tendrá la estructura año-mes-día
 	 * @param importe
 	 *            importe de la comanda
 	 * @param productos
-	 *            productos
+	 *            diccionario con los {@code Productos} y los {@code Integers}
+	 * @throws IllegalArgumentException cuando el entero que indica el estado es menor que 0
+	 * @throws IllegalArgumentException cuando el entero que indica el estado es mayor que 2
 	 */
-	public Comanda(int estado, LocalDateTime fecha, HashMap<Producto, Integer> productos) {
+	public Comanda(int estado, LocalDate fecha, HashMap<Producto, Integer> productos) {
 		if (estado < 0) {
-			throw new IllegalArgumentException("El estado de la comanda debe ser un número entre 0 y 3");
+			throw new IllegalArgumentException("El estado de la comanda debe ser un número entre 0 y 2");
 		}
 		if (estado >= 3) {
-			throw new IllegalArgumentException("El estado de la comanda debe ser un número entre 0 y 3");
+			throw new IllegalArgumentException("El estado de la comanda debe ser un número entre 0 y 2");
 		}
 
 		this.estado = estado;
@@ -58,33 +68,43 @@ public class Comanda {
 	}
 
 	/**
-	 * Getter de la fecha de la comanda
-	 * @return Devuelve la fecha de la comanda
+	 * Devuelve la fecha de la comanda 
+	 * @return Devuelve la fecha de la comanda en formato año-mes-día
 	 */
-	public LocalDateTime getFecha() {
+	public LocalDate getFecha() {
 		return fecha;
 	}
 
 	/**
 	 * 
-	 * Getter del estado
+	 * Devuelve el estado de la comanda
 	 * 
-	 * @return devuelve el estado del pedido
+	 * @return devuelve un número entero que se corresponde al estado de la comanda
 	 */
 	public int getEstado() {
 		return estado;
 	}
 
 	/**
-	 * setter del estado
-	 * 
+	 *  Cambia el estado de la comanda 
+	 * @throws IllegalArgumentException cuando el entero que indica el estado es menor que 0
+	 * @throws IllegalArgumentException cuando el entero que indica el estado es mayor que 2
+	 * @throws IllegalArgumentException cuando el nuevo estado es igual que el que ya tenía la comanda
 	 */
 	public void setEstado(int estado) {
+		if (estado <0) {
+			throw new IllegalArgumentException("El estado de la comanda debe ser un número entre 0 y 2");
+		}
+		if (estado >=3 ) {
+			throw new IllegalArgumentException("El estado de la comanda debe ser un número entre 0 y 2");
+		}
+		if (this.estado == estado) {
+			throw new IllegalArgumentException("El estado de la comanda debe ser diferente al actual");
+		}
 		this.estado = estado;
 	}
 
 	private HashMap<Producto, Integer> productos() {
-		// TODO: This might break things if they modify it. Check with Felix
 		return productos;
 	}
 
@@ -124,6 +144,9 @@ public class Comanda {
 	 *            Producto a introducir en la comanda
 	 * @param cantidad
 	 *            Cantidad de producto a introducir (0 < cantidad < stock)
+	 * @throws IllegalArgumentException cuando el producto ya existe en la comanda
+	 * @throws IllegalArgumentException cuando la cantidad es negativa
+	 * @throws IllegalArgumentException cuando la cantidad es mayor que el stock disponible
 	 */
 	public void addProducto(Producto producto, int cantidad) {
 		if (tieneProducto(producto)) {
@@ -147,6 +170,7 @@ public class Comanda {
 	 * 
 	 * @param producto
 	 *            producto a remover de la comanda
+	 * @throws IllegalArgumentException cuando el producto no existe
 	 */
 	public void removeProducto(Producto producto) {
 		if (!tieneProducto(producto)) {
@@ -165,6 +189,7 @@ public class Comanda {
 	 * @param producto
 	 *            producto del que se quiere comprobar la cantidad
 	 * @return cantidad de producto en la comanda
+	 * @throws IllegalArgumentException cuando el producto no existe en la comanda
 	 */
 	public int cantidad(Producto producto) {
 		if (!tieneProducto(producto)) {
@@ -182,6 +207,9 @@ public class Comanda {
 	 *            producto a remover de la comanda
 	 * @param cantidad
 	 *            nueva cantidad de producto a usar en la comanda
+	 * @throws IllegalArgumentException cuando el producto no existe en la comanda
+	 * @throws IllegalArgumentException cuando la cantidad que se va a usar del producto es negativa
+	 * @throws IllegalArgumentException cuando la cantidad que se pide es mayor que el stock disponible
 	 */
 	public void modificaProducto(Producto producto, int cantidad) {
 		if (!tieneProducto(producto)) {
