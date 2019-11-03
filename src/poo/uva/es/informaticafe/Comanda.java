@@ -26,6 +26,7 @@ public class Comanda {
 
 	private int estado;
 	private LocalDate fecha;
+	@SuppressWarnings("unused")
 	private double importe;
 	private HashMap<Producto, Integer> productos;
 

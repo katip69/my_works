@@ -7,7 +7,6 @@ import org.junit.Test;
 import poo.uva.es.informaticafe.Producto;
 import poo.uva.es.informaticafe.Comanda;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
 
@@ -48,6 +47,7 @@ public class ComandaTest {
 		LocalDate fecha = LocalDate.now();
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
 		productos.put(manzana, 3);
+		@SuppressWarnings("unused")
 		Comanda comanda = new Comanda(-1, fecha, productos);
 	}
 
@@ -57,6 +57,7 @@ public class ComandaTest {
 		LocalDate fecha = LocalDate.now();
 		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
 		productos.put(manzana, 3);
+		@SuppressWarnings("unused")
 		Comanda comanda = new Comanda(3, fecha, productos);
 	}
 

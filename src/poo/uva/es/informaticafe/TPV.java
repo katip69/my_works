@@ -3,7 +3,6 @@ package poo.uva.es.informaticafe;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * Creación de una terminal de trabajo de tipo TPV. Nos permite crear una nueva comanda que será añadida
@@ -30,6 +29,7 @@ public class TPV {
 	 * Constructor de TPV
 	 */
 	public TPV() {
+		@SuppressWarnings("unused")
 		ArrayList<Comanda> comandas;
 	}
 
@@ -94,7 +94,7 @@ public class TPV {
 				comandasPagadas.add(comanda);
 			}
 		}
-		return comandasPagadas;
+		return comandasPagadas; 
 	}
 
 	/**
