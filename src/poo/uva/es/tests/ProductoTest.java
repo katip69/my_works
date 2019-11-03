@@ -39,11 +39,13 @@ public class ProductoTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void nuevoProductoConPrecioInvalido() {
+		@SuppressWarnings("unused")
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", -0.56);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void nuevoProductoConStockInvalido() {
+		@SuppressWarnings("unused")
 		Producto manzana = new Producto("Manzana", "Fruta etc etc", 0.56, -3);
 	}
 
