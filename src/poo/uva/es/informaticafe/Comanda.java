@@ -26,7 +26,8 @@ import poo.uva.es.informaticafe.Producto;
 
 public class Comanda {
 
-	private int estado;
+	public enum estado{ABIERTO,CERRADO,PAGADO,ANULADO};
+	private estado estados;
 	private LocalDateTime fecha;
 	private HashMap<Producto, Integer> productos;
 
@@ -37,7 +38,7 @@ public class Comanda {
 	public Comanda() {
 		fecha = LocalDateTime.now();
 		productos = new HashMap<Producto, Integer>();
-		estado = 0;
+		estados=estado.ABIERTO;
 	}
 
 	/**
@@ -56,7 +57,7 @@ public class Comanda {
 	 * @return devuelve un número entero que se corresponde al estado de la comanda
 	 */
 	public int getEstado() {
-		return estado;
+		return estados.ordinal();
 	}
 
 	/**
@@ -69,24 +70,24 @@ public class Comanda {
 	 * @throws IllegalArgumentException cuando el nuevo estado es igual que el que
 	 *                                  ya tenía la comanda
 	 */
-	public void setEstado(int estado) {
-		if (estado < 0 || estado > 3) {
+	public void setEstado(estado estados) {
+		if (estados.ordinal() < 0 || estados.ordinal() > 3) {
 			throw new IllegalArgumentException("El estado de la comanda debe ser un número entre 0 y 2");
 		}
 
-		if (this.estado == 2) {
+		if (this.estados.ordinal() == 2) {
 			throw new IllegalArgumentException("Una comanda pagada no puede ser modificada.");
 		}
 
-		if (this.estado == estado) {
+		if (this.estados == estados) {
 			throw new IllegalArgumentException("El estado de la comanda debe ser diferente al actual");
 		}
 
-		if (estado == 2) {
+		if (estados.ordinal() == 2) {
 			sirveProductos();
 		}
 
-		this.estado = estado;
+		this.estados = estados;
 	}
 
 	private void sirveProductos() {

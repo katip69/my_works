@@ -1,6 +1,9 @@
 package poo.uva.es.informaticafe;
 
 import java.util.ArrayList;
+
+import poo.uva.es.informaticafe.Comanda.estado;
+
 import java.time.LocalDate;
 
 /**
@@ -118,7 +121,7 @@ public class TPV {
 		if (!getComandas().contains(comanda)) {
 			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
 		}
-		comanda.setEstado(3);
+		comanda.setEstado(estado.ANULADO);
 	}
 
 	/**
@@ -130,7 +133,7 @@ public class TPV {
 		if (!getComandas().contains(comanda)) {
 			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
 		}
-		comanda.setEstado(2);
+		comanda.setEstado(estado.PAGADO);
 	}
 
 	/**
@@ -142,7 +145,7 @@ public class TPV {
 		if (!getComandas().contains(comanda)) {
 			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
 		}
-		comanda.setEstado(1);
+		comanda.setEstado(estado.CERRADO);
 	}
 
 	/**
@@ -154,7 +157,7 @@ public class TPV {
 		if (!getComandas().contains(comanda)) {
 			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
 		}
-		comanda.setEstado(0);
+		comanda.setEstado(estado.ABIERTO);
 	}
 
 	/**
