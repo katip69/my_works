@@ -62,6 +62,8 @@ public class Comanda {
 	/**
 	 * Cambia el estado de la comanda
 	 * 
+	 * @param estado Entero mayor que 0 y menor que 3 que se corresponderá al estado que tendrá la comanda
+	 * 
 	 * @throws IllegalArgumentException cuando el entero que indica el estado es
 	 *                                  menor que 0 o mayor que 2
 	 * @throws IllegalArgumentException si se intenta cambiar el estado de una
@@ -140,7 +142,7 @@ public class Comanda {
 	 * Introduce un nuevo producto a la comanda.
 	 * 
 	 * @param producto Producto a introducir en la comanda
-	 * @param cantidad Cantidad de producto a introducir (0 < cantidad < stock)
+	 * @param cantidad Cantidad de producto a introducir {@code(0 < cantidad < stock)}
 	 * @throws IllegalArgumentException cuando el producto ya existe en la comanda
 	 * @throws IllegalArgumentException cuando la cantidad es negativa
 	 * @throws IllegalArgumentException cuando la cantidad es mayor que el stock
