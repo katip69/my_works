@@ -1,7 +1,6 @@
 package poo.uva.es.informaticafe;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.time.LocalDate;
 
 /**
@@ -19,165 +18,152 @@ import java.time.LocalDate;
  */
 public class TPV {
 
-	private Comanda comanda;
 	private ArrayList<Comanda> comandas;
-	private ArrayList<Comanda> comandasAnuladas;
-	private ArrayList<Comanda> comandasCerradas;
-	private ArrayList<Comanda> comandasPagadas;
-	private double importeTotal;
 
 	/**
 	 * Constructor de TPV
 	 */
-	public TPV() {	
+	public TPV() {
 		comandas = new ArrayList<>();
-		comandasAnuladas = new ArrayList<>();
-		comandasCerradas = new ArrayList<>();
-		comandasPagadas = new ArrayList<>();
 	}
 
-	/**
-	 * Devuelve la lista de comandas
-	 * @return lista de comandas 
-	 */
-	public ArrayList<Comanda> getComanda() {
+	private ArrayList<Comanda> getComandas() {
 		return comandas;
-	}
-
-	/**
-	 * Creación de una comanda sin atributos y la añade al TPV
-	 */
-	public void creaComandaSinAtributos() {
-		comanda = new Comanda();
-		comandas.add(comanda);
-	}
-
-	/**
-	 * Creación de una comanda con atributos y la añade al TPV
-	 * 
-	 * @param estado
-	 *            estado de la comanda, debe ser un entero entre 0 y 2
-	 * @param fecha
-	 *            fecha en formato año-mes-día
-	 * @param productos
-	 *            diccionario de {@code Producto} como key e {@code Integer}
-	 */
-	public void creaComandaConAtributos(int estado, LocalDate fecha, HashMap<Producto, Integer> productos) {
-		comanda = new Comanda(estado, fecha, productos);
-		comandas.add(comanda);
-	}
-
-	/**
-	 * Setter del estado de las comandas
-	 * 
-	 * @param estado
-	 *            estado al que queremos cambiarlo
-	 */
-	public void modificaEstado(int estado) {
-		comanda.setEstado(estado);
-	}
-
-
-	/**
-	 * Añadimos una nueva comanda a la lista de comandas que hay en el TPV
-	 * 
-	 * @param comanda
-	 *            comanda que queremos añadir a la lista
-	 */
-	public void listaDeComandas(Comanda comanda) {
-		comandas.add(comanda);
-	}
-
-	/**
-	 * Lista de las comandas pagadas en un día en concreto
-	 * 
-	 * @param fecha
-	 *            fecha de la que queremos saber la lista, debe estar en formato
-	 *            año-mes-día
-	 * @return Una lista de comandas
-	 * @throws IllegalArgumentException
-	 *             La lista de comandas debe tener comandas, si está vacia no puede
-	 *             generar ninguna lista
-	 */
-	public ArrayList<Comanda> comandasPagadasDeUnDia(LocalDate fecha) {
-
-		if (comandas.isEmpty()) {
-			throw new IllegalArgumentException("La lista de comandas no puede estar vacía");
-		}
-		int tamano = comandas.size();
-		for (int i = 0; i < tamano; i++) {
-			if (comandas.get(i).getEstado() == 2 && comandas.get(i).getFecha().equals(fecha)) {
-				importeTotal += comanda.importe();
-				comandasPagadas.add(comanda);
-			}
-		}
-		return comandasPagadas;
 	}
 
 	/**
 	 * Calcula el importe total que se ha ganado en un día en concreto
 	 * 
-	 * @param fecha
-	 *            fecha de la que queremos saber el importe en formato año-mes-día
+	 * @param fecha fecha de la que queremos saber el importe
 	 * @return double con el importe total de ese día
 	 */
 	public double importeTotal(LocalDate fecha) {
-		comandasPagadasDeUnDia(fecha);
-		return importeTotal;
+		double importe = 0;
+
+		// Itera sobre los pares HashMap creando un Map individual por cada par
+		for (Comanda comanda : getComandas()) {
+			// Suma el precio de cada producto por la cantidad al importe
+			if (comanda.getFecha().toLocalDate().equals(fecha)) {
+				importe += comanda.importe();
+			}
+		}
+
+		return importe;
+	}
+
+	private ArrayList<Comanda> comandasConEstado(LocalDate fecha, int estado) {
+
+		ArrayList<Comanda> comandasAnuladas = new ArrayList<>();
+
+		for (Comanda comanda : getComandas()) {
+			if (comanda.getEstado() == estado && comanda.getFecha().toLocalDate().equals(fecha)) {
+				comandasAnuladas.add(comanda);
+			}
+		}
+
+		return comandasAnuladas;
+
 	}
 
 	/**
 	 * Nos da una lista con las comandas que han sido anuladas en un día en concreto
 	 * 
-	 * @param fecha
-	 *            fecha de la que queremos conocer que comandas se han anulado en un
-	 *            día en concreto (con formato año-mes-día)
+	 * @param fecha fecha de la que queremos conocer que comandas se han anulado en
+	 *              un día en concreto
 	 * @return Una lista de comandas
-	 * @throws IllegalArgumentException
-	 *             La lista de comandas debe tener comandas, si está vacia no puede
-	 *             generar ninguna lista
-	 * 
 	 */
-	public ArrayList<Comanda> comandasAnuladasDeUnDia(LocalDate fecha) {
-		if (comandas.isEmpty()) {
-			throw new IllegalArgumentException("La lista de comandas no puede estar vacía");
-		}
-		int tamano = comandas.size();
-		for (int i = 0; i < tamano; i++) {
-			if (comandas.get(i).getEstado() == 1 && comandas.get(i).getFecha().equals(fecha)) {
-				comandasAnuladas.add(comanda);
-			}
-		}
-		return comandasAnuladas;
+	public ArrayList<Comanda> comandasAnuladas(LocalDate fecha) {
+
+		return comandasConEstado(fecha, 3);
 
 	}
 
 	/**
 	 * Nos da una lista con las comandas que han sido cerradas en un día en concreto
 	 * 
-	 * @param fecha
-	 *            fecha de la que queremos conocer que comandas se han cerrado en un
-	 *            día en concreto (con formato año-mes-día)
+	 * @param fecha fecha de la que queremos conocer que comandas se han cerrado en
+	 *              un día en concreto
 	 * @return Una lista de comandas
-	 * @throws IllegalArgumentException
-	 *             La lista de comandas debe tener comandas, si está vacia no puede
-	 *             generar ninguna lista
 	 */
-	public ArrayList<Comanda> comandasCerradasDeUnDia(LocalDate fecha) {
-		if (comandas.isEmpty()) {
-			throw new IllegalArgumentException("La lista de comandas no puede estar vacía");
-		}
-		int tamano = comandas.size();
-		for (int i = 0; i < tamano; i++) {
-			if (comandas.get(i).getEstado() == 0 && comandas.get(i).getFecha().equals(fecha)) {
-				comandasCerradas.add(comanda);
-			}
-		}
-		return comandasCerradas;
+	public ArrayList<Comanda> comandasCerradas(LocalDate fecha) {
+		return comandasConEstado(fecha, 1);
 	}
 
+	/**
+	 * Nos da una lista con las comandas que han sido cerradas en un día en concreto
+	 * 
+	 * @param fecha fecha de la que queremos conocer que comandas se han cerrado en
+	 *              un día en concreto
+	 * @return Una lista de comandas
+	 */
+	public ArrayList<Comanda> comandasPagadas(LocalDate fecha) {
+		return comandasConEstado(fecha, 2);
+	}
+
+	/**
+	 * Añadimos una nueva comanda a la lista de comandas que hay en el TPV
+	 * 
+	 * @param comanda comanda que queremos añadir a la lista
+	 */
+	public void addComanda(Comanda comanda) {
+		comandas.add(comanda);
+	}
+
+	/**
+	 * Anula una comanda.
+	 * 
+	 * @param comanda a ser anulada
+	 */
+	public void anulaComanda(Comanda comanda) {
+		if (!getComandas().contains(comanda)) {
+			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
+		}
+		comanda.setEstado(3);
+	}
+
+	/**
+	 * Marca una comanda como pagada.
+	 * 
+	 * @param comanda pagada
+	 */
+	public void pagaComanda(Comanda comanda) {
+		if (!getComandas().contains(comanda)) {
+			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
+		}
+		comanda.setEstado(2);
+	}
+
+	/**
+	 * Cierra una comanda.
+	 * 
+	 * @param comanda a ser cerrada
+	 */
+	public void cierraComanda(Comanda comanda) {
+		if (!getComandas().contains(comanda)) {
+			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
+		}
+		comanda.setEstado(1);
+	}
+
+	/**
+	 * Abre una comanda.
+	 * 
+	 * @param comanda a ser abierta
+	 */
+	public void abreComanda(Comanda comanda) {
+		if (!getComandas().contains(comanda)) {
+			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
+		}
+		comanda.setEstado(0);
+	}
+
+	/**
+	 * Comprueba si hay alguna comanda en el TPV.
+	 * 
+	 * @return true si no hay comandas en el TPV, false en caso contrario
+	 */
 	public boolean vacia() {
-		return comandas.isEmpty();
+		return getComandas().isEmpty();
 	}
 
 }
