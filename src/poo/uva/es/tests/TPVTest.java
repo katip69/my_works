@@ -1,9 +1,6 @@
 package poo.uva.es.tests;
 
-import java.time.LocalDate;
-import java.util.HashMap;
-
-
+import java.util.ArrayList;
 
 import org.junit.Test;
 import poo.uva.es.informaticafe.Producto;
@@ -25,133 +22,145 @@ public class TPVTest {
 	@Test
 	public void creaTPV() {
 		TPV prueba = new TPV();
-		
+
 		assertTrue(prueba.vacia());
-	
-
 	}
 
 	@Test
-	public void creaComandaSinAtributos() {
+	public void calcularImporte() {
 		TPV prueba = new TPV();
-		prueba.creaComandaSinAtributos();
-		assertFalse(prueba.vacia());
-	}
 
-	@Test
-	public void creaComandaConAtributos() {
-		TPV prueba = new TPV();
-		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
-		LocalDate fecha = LocalDate.now();
-		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
-		productos.put(manzana, 3);
-		int estado=1;
-		prueba.creaComandaConAtributos(estado, fecha, productos);
+		Comanda comanda1 = new Comanda();
+		comanda1.addProducto(new Producto("Pera", "", 1.7, 10), 5); // 5 peras a 1.7 cada una
+		prueba.addComanda(comanda1);
+		prueba.cierraComanda(comanda1);
 
-		
-		assertFalse(prueba.vacia());
-	}
+		Comanda comanda2 = new Comanda();
+		comanda2.addProducto(new Producto("Manzana", "", 2, 10), 3); // 3 manzanas a 2 cada una
+		prueba.addComanda(comanda2);
+		prueba.pagaComanda(comanda2);
 
-	@Test
-	public void modifcaEstado() {
-		TPV prueba = new TPV();
-		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
-		LocalDate fecha = LocalDate.now();
-		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
-		productos.put(manzana, 3);
-		int estado=1;
-		prueba.creaComandaConAtributos(estado,fecha,productos);
-		prueba.modificaEstado(2);
-		assertEquals(2,prueba.getComanda().get(0).getEstado());
-	}
-	@Test
-	public void anadeComandas() {
-		TPV prueba = new TPV();
-		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
-		LocalDate fecha = LocalDate.now();
-		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
-		productos.put(manzana, 3);
-		int estado=1;
-		Comanda comandaPrueba=new Comanda(estado,fecha,productos);
-		prueba.listaDeComandas(comandaPrueba);
-		assertEquals(comandaPrueba,prueba.getComanda().get(0));
-	}
-	@Test
-	public void listaVacia() {
-		TPV prueba = new TPV();
-		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
-		LocalDate fecha = LocalDate.now();
-		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
-		productos.put(manzana, 3);
-		int estado=2;
-		Comanda comandaPrueba=new Comanda(estado,fecha,productos);
-		prueba.creaComandaConAtributos(estado,fecha,productos);
-		assertEquals(comandaPrueba.getEstado(),prueba.comandasPagadasDeUnDia(fecha).get(0).getEstado());
-		assertEquals(comandaPrueba.getFecha(),prueba.comandasPagadasDeUnDia(fecha).get(0).getFecha());
-	
-	}
-	
-	@Test
-	public void precioTotal() {
-		TPV prueba = new TPV();
-		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
-		LocalDate fecha = LocalDate.now();
-		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
-		productos.put(manzana, 1);
-		int estado=2;
-		prueba.creaComandaConAtributos(estado,fecha,productos);
-		assertEquals(1.0,prueba.importeTotal(fecha),0.001);
-		
+		Comanda comanda3 = new Comanda();
+		comanda3.addProducto(new Producto("Naranja", "", 4.6, 10), 9); // 9 naranjas a 4.6 cada una
+		prueba.addComanda(comanda3);
+		prueba.anulaComanda(comanda3); // Esta comanda no deberia contar
+
+		assertEquals(1.7 * 5 + 2 * 3, prueba.importeTotal(comanda1.getFecha().toLocalDate()), 0.001);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void listaIsEmpty() {
+	public void abreComandaFueraDeTPV() {
 		TPV prueba = new TPV();
-		LocalDate fecha = LocalDate.now();
-		prueba.comandasPagadasDeUnDia(fecha);
-		
+
+		Comanda comanda = new Comanda();
+		prueba.abreComanda(comanda);
 	}
-	@Test
-	public void listaComandasAnuladas() {
-		TPV prueba = new TPV();
-		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
-		LocalDate fecha = LocalDate.now();
-		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
-		productos.put(manzana, 3);
-		int estado=1;
-		Comanda comandaPrueba=new Comanda(estado,fecha,productos);
-		prueba.creaComandaConAtributos(estado,fecha,productos);
-		assertEquals(comandaPrueba.getEstado(),prueba.comandasAnuladasDeUnDia(fecha).get(0).getEstado());
-		assertEquals(comandaPrueba.getFecha(),prueba.comandasAnuladasDeUnDia(fecha).get(0).getFecha());
-	
-	}
+
 	@Test(expected = IllegalArgumentException.class)
-	public void listaIsEmptyAnuladas() {
+	public void cierraComandaFueraDeTPV() {
 		TPV prueba = new TPV();
-		LocalDate fecha = LocalDate.now();
-		prueba.comandasAnuladasDeUnDia(fecha);
-		
+
+		Comanda comanda = new Comanda();
+		prueba.cierraComanda(comanda);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void pagaComandaFueraDeTPV() {
+		TPV prueba = new TPV();
+
+		Comanda comanda = new Comanda();
+		prueba.pagaComanda(comanda);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void anulaComandaFueraDeTPV() {
+		TPV prueba = new TPV();
+
+		Comanda comanda = new Comanda();
+		prueba.anulaComanda(comanda);
 	}
 	
 	@Test
-	public void listaComandasCerradas() {
+	public void reabreComanda() {
 		TPV prueba = new TPV();
-		Producto manzana = new Producto("Manzana", "Fruta etc etc", 1.0);
-		LocalDate fecha = LocalDate.now();
-		HashMap<Producto, Integer> productos = new HashMap<Producto, Integer>();
-		productos.put(manzana, 3);
-		int estado=0;
-		Comanda comandaPrueba=new Comanda(estado,fecha,productos);
-		prueba.creaComandaConAtributos(estado,fecha,productos);
-		assertEquals(comandaPrueba.getEstado(),prueba.comandasCerradasDeUnDia(fecha).get(0).getEstado());
-		assertEquals(comandaPrueba.getFecha(),prueba.comandasCerradasDeUnDia(fecha).get(0).getFecha());
+
+		Comanda comanda = new Comanda();
+		prueba.addComanda(comanda);
 	
+		prueba.cierraComanda(comanda);
+		prueba.abreComanda(comanda);
 	}
-	@Test(expected = IllegalArgumentException.class)
-	public void listaIsEmptyCerradas() {
+
+	@Test
+	public void comandasAnuladas() {
 		TPV prueba = new TPV();
-		LocalDate fecha = LocalDate.now();
-		prueba.comandasCerradasDeUnDia(fecha);
-		
+
+		Comanda comanda1 = new Comanda();
+		prueba.addComanda(comanda1);
+		prueba.cierraComanda(comanda1);
+
+		Comanda comanda2 = new Comanda();
+		prueba.addComanda(comanda2);
+		prueba.pagaComanda(comanda2);
+
+		Comanda comanda3 = new Comanda();
+		prueba.addComanda(comanda3);
+		prueba.anulaComanda(comanda3);
+
+		ArrayList<Comanda> anuladas = prueba.comandasAnuladas(comanda1.getFecha().toLocalDate());
+
+		assertTrue(anuladas.contains(comanda3));
+		assertFalse(anuladas.contains(comanda2));
+		assertFalse(anuladas.contains(comanda1));
+
 	}
+
+	@Test
+	public void comandasPagadas() {
+		TPV prueba = new TPV();
+
+		Comanda comanda1 = new Comanda();
+		prueba.addComanda(comanda1);
+		prueba.cierraComanda(comanda1);
+
+		Comanda comanda2 = new Comanda();
+		prueba.addComanda(comanda2);
+		prueba.pagaComanda(comanda2);
+
+		Comanda comanda3 = new Comanda();
+		prueba.addComanda(comanda3);
+		prueba.anulaComanda(comanda3);
+
+		ArrayList<Comanda> pagadas = prueba.comandasPagadas(comanda1.getFecha().toLocalDate());
+
+		assertTrue(pagadas.contains(comanda2));
+		assertFalse(pagadas.contains(comanda3));
+		assertFalse(pagadas.contains(comanda1));
+
+	}
+
+	@Test
+	public void comandasCerradas() {
+		TPV prueba = new TPV();
+
+		Comanda comanda1 = new Comanda();
+		prueba.addComanda(comanda1);
+		prueba.cierraComanda(comanda1);
+
+		Comanda comanda2 = new Comanda();
+		prueba.addComanda(comanda2);
+		prueba.pagaComanda(comanda2);
+
+		Comanda comanda3 = new Comanda();
+		prueba.addComanda(comanda3);
+		prueba.anulaComanda(comanda3);
+
+		ArrayList<Comanda> cerradas = prueba.comandasCerradas(comanda1.getFecha().toLocalDate());
+
+		assertTrue(cerradas.contains(comanda1));
+		assertFalse(cerradas.contains(comanda2));
+		assertFalse(cerradas.contains(comanda3));
+
+	}
+
 }
