@@ -2,8 +2,6 @@ package poo.uva.es.informaticafe;
 
 import java.util.ArrayList;
 
-import poo.uva.es.informaticafe.Comanda.estado;
-
 import java.time.LocalDate;
 
 /**
@@ -54,7 +52,7 @@ public class TPV {
 		return importe;
 	}
 
-	private ArrayList<Comanda> comandasConEstado(LocalDate fecha, int estado) {
+	private ArrayList<Comanda> comandasConEstado(LocalDate fecha, Estados estado) {
 
 		ArrayList<Comanda> comandasAnuladas = new ArrayList<>();
 
@@ -77,7 +75,7 @@ public class TPV {
 	 */
 	public ArrayList<Comanda> comandasAnuladas(LocalDate fecha) {
 
-		return comandasConEstado(fecha, 3);
+		return comandasConEstado(fecha, Estados.ANULADO);
 
 	}
 
@@ -89,7 +87,7 @@ public class TPV {
 	 * @return Una lista de comandas
 	 */
 	public ArrayList<Comanda> comandasCerradas(LocalDate fecha) {
-		return comandasConEstado(fecha, 1);
+		return comandasConEstado(fecha, Estados.CERRADO);
 	}
 
 	/**
@@ -100,7 +98,7 @@ public class TPV {
 	 * @return Una lista de comandas
 	 */
 	public ArrayList<Comanda> comandasPagadas(LocalDate fecha) {
-		return comandasConEstado(fecha, 2);
+		return comandasConEstado(fecha, Estados.PAGADO);
 	}
 
 	/**
@@ -121,19 +119,19 @@ public class TPV {
 		if (!getComandas().contains(comanda)) {
 			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
 		}
-		comanda.setEstado(estado.ANULADO);
+		comanda.setEstado(Estados.ANULADO);
 	}
 
 	/**
 	 * Marca una comanda como pagada.
 	 * 
-	 * @param comanda pagada
+	 * @param comanda a pagar
 	 */
 	public void pagaComanda(Comanda comanda) {
 		if (!getComandas().contains(comanda)) {
 			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
 		}
-		comanda.setEstado(estado.PAGADO);
+		comanda.setEstado(Estados.PAGADO);
 	}
 
 	/**
@@ -145,7 +143,7 @@ public class TPV {
 		if (!getComandas().contains(comanda)) {
 			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
 		}
-		comanda.setEstado(estado.CERRADO);
+		comanda.setEstado(Estados.CERRADO);
 	}
 
 	/**
@@ -157,7 +155,7 @@ public class TPV {
 		if (!getComandas().contains(comanda)) {
 			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
 		}
-		comanda.setEstado(estado.ABIERTO);
+		comanda.setEstado(Estados.ABIERTO);
 	}
 
 	/**

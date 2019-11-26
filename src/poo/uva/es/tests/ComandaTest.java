@@ -3,6 +3,8 @@ package poo.uva.es.tests;
 import org.junit.Test;
 import poo.uva.es.informaticafe.Producto;
 import poo.uva.es.informaticafe.Comanda;
+import poo.uva.es.informaticafe.Estados;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
@@ -143,7 +145,7 @@ public class ComandaTest {
 	public void estadoPorDefecto() {
 		Comanda comanda = new Comanda();
 
-		assertEquals(0, comanda.getEstado());
+		assertEquals(Estados.ABIERTO, comanda.getEstado());
 	}
 
 	@Test
@@ -173,7 +175,7 @@ public class ComandaTest {
 		comanda.addProducto(pera, 3);
 		comanda.addProducto(manzana, 4);
 
-		comanda.setEstado(3);
+		comanda.setEstado(Estados.ANULADO);
 
 		assertEquals(0, comanda.importe(), 0.001);
 	}
@@ -187,7 +189,7 @@ public class ComandaTest {
 		comanda.addProducto(pera, 3);
 		comanda.addProducto(manzana, 4);
 
-		comanda.setEstado(2);
+		comanda.setEstado(Estados.PAGADO);
 
 		assertEquals(5 - 3, pera.unidadesDisponibles());
 		assertEquals(5 - 4, manzana.unidadesDisponibles());
@@ -205,7 +207,7 @@ public class ComandaTest {
 
 		manzana.reducirStock(3);
 
-		comanda.setEstado(2);
+		comanda.setEstado(Estados.PAGADO);
 
 	}
 
@@ -213,31 +215,18 @@ public class ComandaTest {
 	public void setEstadoActual() {
 		Comanda comanda = new Comanda();
 
-		comanda.setEstado(0);
+		comanda.setEstado(Estados.ABIERTO);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void setEstadoComandaPagada() {
 		Comanda comanda = new Comanda();
 
-		comanda.setEstado(2);
-		comanda.setEstado(1);
+		comanda.setEstado(Estados.PAGADO);
+		comanda.setEstado(Estados.CERRADO);
 
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void setEstadoNegativo() {
-		Comanda comanda = new Comanda();
-
-		comanda.setEstado(-1);
-
-	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void setEstadoInvalido() {
-		Comanda comanda = new Comanda();
 
-		comanda.setEstado(5);
-
-	}
 }
