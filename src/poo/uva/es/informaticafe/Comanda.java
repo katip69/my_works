@@ -134,7 +134,7 @@ public class Comanda {
 	 * Introduce un nuevo producto a la comanda.
 	 * 
 	 * @param producto Producto a introducir en la comanda
-	 * @param cantidad Cantidad de producto a introducir (0 < cantidad < stock)
+	 * @param cantidad Cantidad de producto a introducir {@code(0 < cantidad < stock)}
 	 * @throws IllegalArgumentException cuando el producto ya existe en la comanda
 	 * @throws IllegalArgumentException cuando la cantidad es negativa
 	 * @throws IllegalArgumentException cuando la cantidad es mayor que el stock
