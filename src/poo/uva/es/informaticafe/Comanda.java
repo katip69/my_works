@@ -15,7 +15,7 @@ import poo.uva.es.informaticafe.Producto;
  * eliminar productos de las comandas y añadir un producto con su
  * correspondiente cantidad.
  * 
- * El estado de la comanda sera un enum 
+ * El estado de la comanda sera un enum
  * 
  * @author carlgom
  * @author manmend
@@ -28,6 +28,7 @@ public class Comanda {
 	private Estados estado;
 	private LocalDateTime fecha;
 	private HashMap<Producto, Integer> productos;
+	private double importe;
 
 	/**
 	 * Crea una comanda vacía sin atributos
@@ -36,7 +37,8 @@ public class Comanda {
 	public Comanda() {
 		fecha = LocalDateTime.now();
 		productos = new HashMap<Producto, Integer>();
-		estado=Estados.ABIERTO;
+		estado = Estados.ABIERTO;
+		importe = 0;
 	}
 
 	/**
@@ -47,17 +49,24 @@ public class Comanda {
 	public LocalDateTime getFecha() {
 		return fecha;
 	}
+	
+	private void setImporte(double importe) {
+		this.importe = importe;
+	}
+	
+	private double getImporte() {
+		return importe;
+	}
 
 	/**
 	 * 
 	 * Devuelve el estado de la comanda
 	 * 
-	 * @return devuelve el estado actual  de la comanda
+	 * @return devuelve el estado actual de la comanda
 	 */
 	public Estados getEstado() {
-		return  estado;
+		return estado;
 	}
-	
 
 	/**
 	 * Cambia el estado de la comanda
@@ -69,18 +78,19 @@ public class Comanda {
 	 */
 	public void setEstado(Estados estado) {
 
-		if (getEstado()==Estados.PAGADO) {
+		if (getEstado() == Estados.PAGADO) {
 			throw new IllegalArgumentException("Una comanda pagada no puede ser modificada.");
 		}
 
-		if (getEstado()== estado) {
+		if (getEstado() == estado) {
 			throw new IllegalArgumentException("El estado de la comanda debe ser diferente al actual");
 		}
 
-		if (estado ==Estados.PAGADO ) {
+		if (estado == Estados.PAGADO) {
+			setImporte(importe());
 			sirveProductos();
 		}
-		this.estado=estado;
+		this.estado = estado;
 	}
 
 	private void sirveProductos() {
@@ -88,7 +98,7 @@ public class Comanda {
 			if (par.getKey().unidadesDisponibles() < par.getValue()) {
 				throw new IllegalArgumentException("No se puede vender una comanda sin stock suficiente");
 			}
-			
+
 			par.getKey().reducirStock(par.getValue());
 		}
 
@@ -101,13 +111,17 @@ public class Comanda {
 	/**
 	 * Calcula el precio total de la comanda actual.
 	 * 
-	 * @return Valor del importe de una  comanda
+	 * @return Valor del importe de una comanda
 	 */
 	public double importe() {
 		double importe = 0;
 
 		if (getEstado() == Estados.ANULADO) {
 			return importe;
+		}
+		
+		if (getEstado() == Estados.PAGADO) {
+			return getImporte();
 		}
 
 		// Itera sobre los pares HashMap creando un Map individual por cada par
@@ -134,7 +148,8 @@ public class Comanda {
 	 * Introduce un nuevo producto a la comanda.
 	 * 
 	 * @param producto Producto a introducir en la comanda
-	 * @param cantidad Cantidad de producto a introducir {@code(0 < cantidad < stock)}
+	 * @param cantidad Cantidad de producto a introducir {@code(0 < cantidad <
+	 *                 stock)}
 	 * @throws IllegalArgumentException cuando el producto ya existe en la comanda
 	 * @throws IllegalArgumentException cuando la cantidad es negativa
 	 * @throws IllegalArgumentException cuando la cantidad es mayor que el stock
