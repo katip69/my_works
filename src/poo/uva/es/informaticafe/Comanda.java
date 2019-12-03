@@ -15,8 +15,7 @@ import poo.uva.es.informaticafe.Producto;
  * eliminar productos de las comandas y añadir un producto con su
  * correspondiente cantidad.
  * 
- * El estado de la comanda sera un int entre 0 y 3. (0 = abierto, 1 = cerrado, 2
- * = pagado, 3 = anulado)
+ * El estado de la comanda sera un enum 
  * 
  * @author carlgom
  * @author manmend
@@ -26,7 +25,7 @@ import poo.uva.es.informaticafe.Producto;
 
 public class Comanda {
 
-	private int estado;
+	private Estados estado;
 	private LocalDateTime fecha;
 	private HashMap<Producto, Integer> productos;
 
@@ -37,7 +36,7 @@ public class Comanda {
 	public Comanda() {
 		fecha = LocalDateTime.now();
 		productos = new HashMap<Producto, Integer>();
-		estado = 0;
+		estado=Estados.ABIERTO;
 	}
 
 	/**
@@ -53,42 +52,35 @@ public class Comanda {
 	 * 
 	 * Devuelve el estado de la comanda
 	 * 
-	 * @return devuelve un número entero que se corresponde al estado de la comanda
+	 * @return devuelve el estado actual  de la comanda
 	 */
-	public int getEstado() {
-		return estado;
+	public Estados getEstado() {
+		return  estado;
 	}
+	
 
 	/**
 	 * Cambia el estado de la comanda
 	 * 
-	 * @param estado Entero mayor que 0 y menor que 3 que se corresponderá al estado que tendrá la comanda
-	 * 
-	 * @throws IllegalArgumentException cuando el entero que indica el estado es
-	 *                                  menor que 0 o mayor que 2
 	 * @throws IllegalArgumentException si se intenta cambiar el estado de una
 	 *                                  comanda ya pagada
 	 * @throws IllegalArgumentException cuando el nuevo estado es igual que el que
 	 *                                  ya tenía la comanda
 	 */
-	public void setEstado(int estado) {
-		if (estado < 0 || estado > 3) {
-			throw new IllegalArgumentException("El estado de la comanda debe ser un número entre 0 y 2");
-		}
+	public void setEstado(Estados estado) {
 
-		if (this.estado == 2) {
+		if (getEstado()==Estados.PAGADO) {
 			throw new IllegalArgumentException("Una comanda pagada no puede ser modificada.");
 		}
 
-		if (this.estado == estado) {
+		if (getEstado()== estado) {
 			throw new IllegalArgumentException("El estado de la comanda debe ser diferente al actual");
 		}
 
-		if (estado == 2) {
+		if (estado ==Estados.PAGADO ) {
 			sirveProductos();
 		}
-
-		this.estado = estado;
+		this.estado=estado;
 	}
 
 	private void sirveProductos() {
@@ -109,12 +101,12 @@ public class Comanda {
 	/**
 	 * Calcula el precio total de la comanda actual.
 	 * 
-	 * @return Valor del importe de Ila comanda
+	 * @return Valor del importe de una  comanda
 	 */
 	public double importe() {
 		double importe = 0;
 
-		if (getEstado() == 3) {
+		if (getEstado() == Estados.ANULADO) {
 			return importe;
 		}
 
