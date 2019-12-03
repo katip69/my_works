@@ -178,6 +178,7 @@ public class ComandaTest {
 		comanda.setEstado(Estados.ANULADO);
 
 		assertEquals(0, comanda.importe(), 0.001);
+		assertEquals(Estados.ANULADO, comanda.getEstado());
 	}
 
 	@Test
@@ -193,6 +194,7 @@ public class ComandaTest {
 
 		assertEquals(5 - 3, pera.unidadesDisponibles());
 		assertEquals(5 - 4, manzana.unidadesDisponibles());
+		assertEquals(Estados.PAGADO, comanda.getEstado());
 
 	}
 
