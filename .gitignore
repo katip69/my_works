@@ -102,3 +102,6 @@ hs_err_pid*
 !.project
 !.classpath
 !.settings/
+
+# Allow binaries in lib
+!lib/fabricante/externo/tarjetas/*
