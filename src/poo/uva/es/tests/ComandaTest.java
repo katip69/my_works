@@ -228,6 +228,15 @@ public class ComandaTest {
 		comanda.setEstado(Estados.CERRADO);
 
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void setEstadoComandaAnulada() {
+		Comanda comanda = new Comanda();
+
+		comanda.setEstado(Estados.ANULADO);
+		comanda.setEstado(Estados.ABIERTO);
+
+	}
 
 	@Test
 	public void precioComandaTrasCambioPrecioProducto() {

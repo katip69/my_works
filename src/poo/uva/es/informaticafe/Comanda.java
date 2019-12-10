@@ -49,11 +49,11 @@ public class Comanda {
 	public LocalDateTime getFecha() {
 		return fecha;
 	}
-	
+
 	private void setImporte(double importe) {
 		this.importe = importe;
 	}
-	
+
 	private double getImporte() {
 		return importe;
 	}
@@ -71,15 +71,23 @@ public class Comanda {
 	/**
 	 * Cambia el estado de la comanda
 	 * 
-	 * @throws IllegalArgumentException si se intenta cambiar el estado de una
-	 *                                  comanda ya pagada
-	 * @throws IllegalArgumentException cuando el nuevo estado es igual que el que
-	 *                                  ya tenía la comanda
+	 * @param estado Nuevo estado al que queremos cambiar nuestra comanda
+	 * 
+	 * @throws IllegalArgumentException
+	 *             si se intenta cambiar el estado de una comanda ya pagada
+	 * @throws IllegalArgumentException
+	 *             si se intenta cambiar el estado de una comanda anulada
+	 * @throws IllegalArgumentException
+	 *             cuando el nuevo estado es igual que el que ya tenía la comanda
 	 */
 	public void setEstado(Estados estado) {
 
 		if (getEstado() == Estados.PAGADO) {
 			throw new IllegalArgumentException("Una comanda pagada no puede ser modificada.");
+		}
+
+		if (getEstado() == Estados.ANULADO) {
+			throw new IllegalArgumentException("Una comanda anulada no puede ser modificada.");
 		}
 
 		if (getEstado() == estado) {
@@ -119,7 +127,7 @@ public class Comanda {
 		if (getEstado() == Estados.ANULADO) {
 			return importe;
 		}
-		
+
 		if (getEstado() == Estados.PAGADO) {
 			return getImporte();
 		}
@@ -136,7 +144,8 @@ public class Comanda {
 	/**
 	 * Comprueba si un producto espeficidado existe en la comanda
 	 * 
-	 * @param producto Producto a comprobar su existencia
+	 * @param producto
+	 *            Producto a comprobar su existencia
 	 * @return true si existe en la comanda, false en caso contrario
 	 */
 	public boolean tieneProducto(Producto producto) {
@@ -147,13 +156,16 @@ public class Comanda {
 	/**
 	 * Introduce un nuevo producto a la comanda.
 	 * 
-	 * @param producto Producto a introducir en la comanda
-	 * @param cantidad Cantidad de producto a introducir {@code(0 < cantidad <
-	 *                 stock)}
-	 * @throws IllegalArgumentException cuando el producto ya existe en la comanda
-	 * @throws IllegalArgumentException cuando la cantidad es negativa
-	 * @throws IllegalArgumentException cuando la cantidad es mayor que el stock
-	 *                                  disponible
+	 * @param producto
+	 *            Producto a introducir en la comanda
+	 * @param cantidad
+	 *            Cantidad de producto a introducir {@code(0 < cantidad < stock)}
+	 * @throws IllegalArgumentException
+	 *             cuando el producto ya existe en la comanda
+	 * @throws IllegalArgumentException
+	 *             cuando la cantidad es negativa
+	 * @throws IllegalArgumentException
+	 *             cuando la cantidad es mayor que el stock disponible
 	 */
 	public void addProducto(Producto producto, int cantidad) {
 		if (tieneProducto(producto)) {
@@ -174,8 +186,10 @@ public class Comanda {
 	 * <p>
 	 * El stock del producto utilizado en la comanda se vuelve disponible de nuevo.
 	 * 
-	 * @param producto producto a remover de la comanda
-	 * @throws IllegalArgumentException cuando el producto no existe
+	 * @param producto
+	 *            producto a remover de la comanda
+	 * @throws IllegalArgumentException
+	 *             cuando el producto no existe
 	 */
 	public void removeProducto(Producto producto) {
 		if (!tieneProducto(producto)) {
@@ -190,9 +204,11 @@ public class Comanda {
 	 * Dado un producto, devuelve la cantidad de unidades de ese producto asignadas
 	 * a la comanda.
 	 * 
-	 * @param producto producto del que se quiere comprobar la cantidad
+	 * @param producto
+	 *            producto del que se quiere comprobar la cantidad
 	 * @return cantidad de producto en la comanda
-	 * @throws IllegalArgumentException cuando el producto no existe en la comanda
+	 * @throws IllegalArgumentException
+	 *             cuando el producto no existe en la comanda
 	 */
 	public int cantidad(Producto producto) {
 		if (!tieneProducto(producto)) {
@@ -206,13 +222,16 @@ public class Comanda {
 	 * Modifica la cantidad de un producto asignada a la comanda.
 	 * <p>
 	 * 
-	 * @param producto producto a remover de la comanda
-	 * @param cantidad nueva cantidad de producto a usar en la comanda
-	 * @throws IllegalArgumentException cuando el producto no existe en la comanda
-	 * @throws IllegalArgumentException cuando la cantidad que se va a usar del
-	 *                                  producto es negativa
-	 * @throws IllegalArgumentException cuando la cantidad que se pide es mayor que
-	 *                                  el stock disponible
+	 * @param producto
+	 *            producto a remover de la comanda
+	 * @param cantidad
+	 *            nueva cantidad de producto a usar en la comanda
+	 * @throws IllegalArgumentException
+	 *             cuando el producto no existe en la comanda
+	 * @throws IllegalArgumentException
+	 *             cuando la cantidad que se va a usar del producto es negativa
+	 * @throws IllegalArgumentException
+	 *             cuando la cantidad que se pide es mayor que el stock disponible
 	 */
 	public void modificaProducto(Producto producto, int cantidad) {
 		if (!tieneProducto(producto)) {

@@ -92,7 +92,7 @@ public class TPVTest {
 	}
 
 	@Test
-	public void reabreComanda() {
+	public void estadosComanda() {
 		TPV tpv = new TPV();
 
 		Comanda comanda = new Comanda();
@@ -102,6 +102,10 @@ public class TPVTest {
 		assertEquals(Estados.CERRADO, comanda.getEstado());
 		tpv.abreComanda(comanda);
 		assertEquals(Estados.ABIERTO, comanda.getEstado());
+		tpv.anulaComanda(comanda);
+		assertEquals(Estados.ANULADO, comanda.getEstado());
+		tpv.pagaComanda(comanda);
+		assertEquals(Estados.PAGADO, comanda.getEstado());
 	}
 
 	@Test
@@ -195,7 +199,7 @@ public class TPVTest {
 		tpv.addComanda(comanda);
 		tpv.abreComanda(comanda);
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void comandaMismoEstadoAnulada() {
 		TPV tpv = new TPV();
@@ -205,6 +209,7 @@ public class TPVTest {
 		tpv.addComanda(comanda);
 		tpv.anulaComanda(comanda);
 	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void comandaMismoEstadoPagado() {
 		TPV tpv = new TPV();
@@ -216,7 +221,7 @@ public class TPVTest {
 		tpv.addComanda(comanda);
 		tpv.pagaComanda(comanda, tarjeta, credencial);
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void modificaComandaPagadaAAbierta() {
 		TPV tpv = new TPV();
@@ -226,7 +231,7 @@ public class TPVTest {
 		tpv.addComanda(comanda);
 		tpv.abreComanda(comanda);
 	}
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void modificaComandaPagadaAAnulada() {
 		TPV tpv = new TPV();
@@ -246,5 +251,5 @@ public class TPVTest {
 		tpv.addComanda(comanda);
 		tpv.cierraComanda(comanda);
 	}
-	
+
 }
