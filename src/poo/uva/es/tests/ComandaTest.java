@@ -228,7 +228,22 @@ public class ComandaTest {
 		comanda.setEstado(Estados.CERRADO);
 
 	}
-	
-	
+
+	@Test
+	public void precioComandaTrasCambioPrecioProducto() {
+		Comanda comanda = new Comanda();
+		Producto pera = new Producto("Pera", "", 2.1, 5);
+
+		comanda.addProducto(pera, 3);
+
+		assertEquals(2.1 * 3, comanda.importe(), 0.001);
+
+		comanda.setEstado(Estados.PAGADO);
+
+		pera.cambiaPrecio(99.99);
+
+		assertEquals(2.1 * 3, comanda.importe(), 0.001);
+
+	}
 
 }
