@@ -44,7 +44,7 @@ public class TPV {
 
 		// Itera sobre los pares HashMap creando un Map individual por cada par
 		for (Comanda comanda : getComandas()) {
-			// Suma el p	recio de cada producto por la cantidad al importe
+			// Suma el precio de cada producto por la cantidad al importe
 			if (comanda.getFecha().toLocalDate().equals(fecha)) {
 				importe += comanda.importe();
 			}
