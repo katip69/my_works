@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 import java.util.HashMap;
 import java.util.Map;
-import poo.uva.es.informaticafe.Producto;
+
 
 /**
  * La clase {@link Comanda} nos permite crear nuevas comandas, que se compondra
@@ -36,7 +36,7 @@ public class Comanda {
 
 	public Comanda() {
 		fecha = LocalDateTime.now();
-		productos = new HashMap<Producto, Integer>();
+		productos = new HashMap<>();
 		estado = Estados.ABIERTO;
 		importe = 0;
 	}
@@ -122,10 +122,10 @@ public class Comanda {
 	 * @return Valor del importe de una comanda
 	 */
 	public double importe() {
-		double importe = 0;
+		double dinero = 0;
 
 		if (getEstado() == Estados.ANULADO) {
-			return importe;
+			return dinero;
 		}
 
 		if (getEstado() == Estados.PAGADO) {
@@ -135,10 +135,10 @@ public class Comanda {
 		// Itera sobre los pares HashMap creando un Map individual por cada par
 		for (Map.Entry<Producto, Integer> par : productos().entrySet()) {
 			// Suma el precio de cada producto por la cantidad al importe
-			importe += par.getKey().precio() * par.getValue();
+			dinero += par.getKey().precio() * par.getValue();
 		}
 
-		return importe;
+		return dinero;
 	}
 
 	/**
