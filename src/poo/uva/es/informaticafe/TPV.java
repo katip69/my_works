@@ -3,6 +3,7 @@ package poo.uva.es.informaticafe;
 import java.util.ArrayList;
 
 import java.time.LocalDate;
+import fabricante.externo.tarjetas.TarjetaMonedero;
 
 /**
  * Creación de una terminal de trabajo de tipo TPV. Nos permite crear una nueva
@@ -126,11 +127,16 @@ public class TPV {
 	 * Marca una comanda como pagada.
 	 * 
 	 * @param comanda a pagar
+	 * @param tarjeta TarjetaMonedero de la que descontar el saldo
+	 * @param credencial Credencial para autorizar el pago de la tarjeta
+	 * @throws IllegalArgumentException si la comanda a modificar no es parte del TPV
 	 */
-	public void pagaComanda(Comanda comanda) {
+	public void pagaComanda(Comanda comanda, TarjetaMonedero tarjeta, String credencial) {
 		if (!getComandas().contains(comanda)) {
 			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
 		}
+		
+		tarjeta.descontarDelSaldo(credencial, comanda.importe());
 		comanda.setEstado(Estados.PAGADO);
 	}
 
