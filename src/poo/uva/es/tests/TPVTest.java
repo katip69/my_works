@@ -3,6 +3,8 @@ package poo.uva.es.tests;
 import java.util.ArrayList;
 
 import org.junit.Test;
+
+import fabricante.externo.tarjetas.TarjetaMonedero;
 import poo.uva.es.informaticafe.Producto;
 import poo.uva.es.informaticafe.Comanda;
 import poo.uva.es.informaticafe.TPV;
@@ -10,7 +12,7 @@ import poo.uva.es.informaticafe.Estados;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
-
+	
 /**
  * 
  * @author carlgom
@@ -30,6 +32,10 @@ public class TPVTest {
 	@Test
 	public void calcularImporte() {
 		TPV tpv = new TPV();
+		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
+		String credencial = "6Z1y00Nm31aA-571";
+
+
 
 		Comanda comanda1 = new Comanda();
 		comanda1.addProducto(new Producto("Pera", "", 1.7, 10), 5); // 5 peras a 1.7 cada una
@@ -39,7 +45,8 @@ public class TPVTest {
 		Comanda comanda2 = new Comanda();
 		comanda2.addProducto(new Producto("Manzana", "", 2, 10), 3); // 3 manzanas a 2 cada una
 		tpv.addComanda(comanda2);
-		tpv.pagaComanda(comanda2);
+		tpv.pagaComanda(comanda2, tarjeta, credencial);
+		assertEquals(4, tarjeta.getSaldoActual(), 0.001);
 
 		Comanda comanda3 = new Comanda();
 		comanda3.addProducto(new Producto("Naranja", "", 4.6, 10), 9); // 9 naranjas a 4.6 cada una
@@ -68,9 +75,12 @@ public class TPVTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void pagaComandaFueraDeTPV() {
 		TPV tpv = new TPV();
+		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
+		String credencial = "6Z1y00Nm31aA-571";
+
 
 		Comanda comanda = new Comanda();
-		tpv.pagaComanda(comanda);
+		tpv.pagaComanda(comanda, tarjeta, credencial);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -97,14 +107,17 @@ public class TPVTest {
 	@Test
 	public void comandasAnuladas() {
 		TPV tpv = new TPV();
+		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
+		String credencial = "6Z1y00Nm31aA-571";
 
 		Comanda comanda1 = new Comanda();
 		tpv.addComanda(comanda1);
 		tpv.cierraComanda(comanda1);
 
 		Comanda comanda2 = new Comanda();
+		comanda2.addProducto(new Producto("Manzana", "", 2, 10), 3); // 3 manzanas a 2 cada una
 		tpv.addComanda(comanda2);
-		tpv.pagaComanda(comanda2);
+		tpv.pagaComanda(comanda2, tarjeta, credencial);
 
 		Comanda comanda3 = new Comanda();
 		tpv.addComanda(comanda3);
@@ -121,14 +134,18 @@ public class TPVTest {
 	@Test
 	public void comandasPagadas() {
 		TPV tpv = new TPV();
+		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
+		String credencial = "6Z1y00Nm31aA-571";
+
 
 		Comanda comanda1 = new Comanda();
 		tpv.addComanda(comanda1);
 		tpv.cierraComanda(comanda1);
 
 		Comanda comanda2 = new Comanda();
+		comanda2.addProducto(new Producto("Manzana", "", 2, 10), 3); // 3 manzanas a 2 cada una
 		tpv.addComanda(comanda2);
-		tpv.pagaComanda(comanda2);
+		tpv.pagaComanda(comanda2, tarjeta, credencial);
 
 		Comanda comanda3 = new Comanda();
 		tpv.addComanda(comanda3);
@@ -145,14 +162,18 @@ public class TPVTest {
 	@Test
 	public void comandasCerradas() {
 		TPV tpv = new TPV();
+		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
+		String credencial = "6Z1y00Nm31aA-571";
+
 
 		Comanda comanda1 = new Comanda();
 		tpv.addComanda(comanda1);
 		tpv.cierraComanda(comanda1);
 
 		Comanda comanda2 = new Comanda();
+		comanda2.addProducto(new Producto("Manzana", "", 2, 10), 3); // 3 manzanas a 2 cada una
 		tpv.addComanda(comanda2);
-		tpv.pagaComanda(comanda2);
+		tpv.pagaComanda(comanda2, tarjeta, credencial);
 
 		Comanda comanda3 = new Comanda();
 		tpv.addComanda(comanda3);
@@ -187,11 +208,13 @@ public class TPVTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void comandaMismoEstadoPagado() {
 		TPV tpv = new TPV();
+		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
+		String credencial = "6Z1y00Nm31aA-571";
 
 		Comanda comanda = new Comanda();
 		comanda.setEstado(Estados.PAGADO);
 		tpv.addComanda(comanda);
-		tpv.pagaComanda(comanda);
+		tpv.pagaComanda(comanda, tarjeta, credencial);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
