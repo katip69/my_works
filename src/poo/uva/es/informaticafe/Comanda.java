@@ -1,29 +1,10 @@
 package poo.uva.es.informaticafe;
 
 import java.time.LocalDateTime;
-
 import java.util.HashMap;
 import java.util.Map;
 
-
-/**
- * La clase {@link Comanda} nos permite crear nuevas comandas, que se compondra
- * de una fecha (en formato año-mes-día), un diccionario de {@code Productos} y
- * {@code Integers} y un número entero que será el precio de la comanda. Además
- * nos permite conocer la lista de productos que la forman, sus cantidades, el
- * importe total de la comanda, modificar las cantidades de los productos,
- * eliminar productos de las comandas y añadir un producto con su
- * correspondiente cantidad.
- * 
- * El estado de la comanda sera un enum
- * 
- * @author carlgom
- * @author manmend
- * @author migrase
- * @version 1.0
- */
-
-public class Comanda {
+public abstract class Comanda {
 
 	private Estados estado;
 	private LocalDateTime fecha;
@@ -71,7 +52,8 @@ public class Comanda {
 	/**
 	 * Cambia el estado de la comanda
 	 * 
-	 * @param estado Nuevo estado al que queremos cambiar nuestra comanda
+	 * @param estado
+	 *            Nuevo estado al que queremos cambiar nuestra comanda
 	 * 
 	 * @throws IllegalArgumentException
 	 *             si se intenta cambiar el estado de una comanda ya pagada
@@ -101,21 +83,6 @@ public class Comanda {
 		this.estado = estado;
 	}
 
-	private void sirveProductos() {
-		for (Map.Entry<Producto, Integer> par : productos().entrySet()) {
-			if (par.getKey().unidadesDisponibles() < par.getValue()) {
-				throw new IllegalArgumentException("No se puede vender una comanda sin stock suficiente");
-			}
-
-			par.getKey().reducirStock(par.getValue());
-		}
-
-	}
-
-	private HashMap<Producto, Integer> productos() {
-		return productos;
-	}
-
 	/**
 	 * Calcula el precio total de la comanda actual.
 	 * 
@@ -139,6 +106,23 @@ public class Comanda {
 		}
 
 		return dinero;
+	}
+
+	
+
+	private void sirveProductos() {
+		for (Map.Entry<Producto, Integer> par : productos().entrySet()) {
+			if (par.getKey().unidadesDisponibles() < par.getValue()) {
+				throw new IllegalArgumentException("No se puede vender una comanda sin stock suficiente");
+			}
+
+			par.getKey().reducirStock(par.getValue());
+		}
+
+	}
+
+	private HashMap<Producto, Integer> productos() {
+		return productos;
 	}
 
 	/**
@@ -256,5 +240,4 @@ public class Comanda {
 	public boolean vacia() {
 		return productos().isEmpty();
 	}
-
 }

@@ -2,7 +2,7 @@ package poo.uva.es.tests;
 
 import org.junit.Test;
 import poo.uva.es.informaticafe.Producto;
-import poo.uva.es.informaticafe.Comanda;
+import poo.uva.es.informaticafe.ComandaLocal;
 import poo.uva.es.informaticafe.Estados;
 
 import static org.junit.Assert.assertEquals;
@@ -20,13 +20,13 @@ public class ComandaTest {
 
 	@Test
 	public void comandaValida() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		assertTrue(comanda.vacia());
 	}
 
 	@Test
 	public void tieneProducto() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		Producto manzana = new Producto("Manzana", "", 2.3, 2);
 
 		comanda.addProducto(manzana, 1);
@@ -36,7 +36,7 @@ public class ComandaTest {
 
 	@Test
 	public void noTieneProducto() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		Producto manzana = new Producto("Manzana", "", 2.3, 5);
 		Producto pera = new Producto("Pera", "", 2.1, 5);
 
@@ -46,7 +46,7 @@ public class ComandaTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void addProductoInvalido() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		Producto pera = new Producto("Pera", "", 2.1, 5);
 
 		comanda.addProducto(pera, -3);
@@ -54,7 +54,7 @@ public class ComandaTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void addProductoExistente() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		Producto manzana = new Producto("Manzana", "", 2.3, 5);
 
 		comanda.addProducto(manzana, 2);
@@ -65,7 +65,7 @@ public class ComandaTest {
 	public void addProductoSinStockSuficiente() {
 		Producto pera = new Producto("Pera", "", 2.1, 5);
 
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 
 		comanda.addProducto(pera, 8);
 	}
@@ -74,7 +74,7 @@ public class ComandaTest {
 	public void removeProductoValido() {
 		Producto pera = new Producto("Pera", "", 2.1, 5);
 
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 
 		comanda.addProducto(pera, 3);
 
@@ -88,7 +88,7 @@ public class ComandaTest {
 	public void removeProductoInexistente() {
 		Producto pera = new Producto("Pera", "", 2.1, 5);
 
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 
 		comanda.removeProducto(pera);
 
@@ -96,7 +96,7 @@ public class ComandaTest {
 
 	@Test
 	public void modificaProductoValido() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		Producto pera = new Producto("Pera", "", 2.1, 5);
 
 		comanda.addProducto(pera, 3);
@@ -109,7 +109,7 @@ public class ComandaTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void modificaProductoInnvalido() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		Producto pera = new Producto("Pera", "", 2.1, 5);
 
 		comanda.addProducto(pera, 3);
@@ -118,7 +118,7 @@ public class ComandaTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void modificaProductoInexistente() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		Producto manzana = new Producto("Manzana", "", 2.3, 5);
 
 		comanda.modificaProducto(manzana, 2);
@@ -126,7 +126,7 @@ public class ComandaTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void modificaProductoSinStockSuficiente() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		Producto pera = new Producto("Pera", "", 2.1, 5);
 
 		comanda.addProducto(pera, 3);
@@ -135,7 +135,7 @@ public class ComandaTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void cantidadProductoNoExistente() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		Producto pera = new Producto("Pera", "", 2.1, 5);
 
 		comanda.cantidad(pera);
@@ -143,20 +143,20 @@ public class ComandaTest {
 
 	@Test
 	public void estadoPorDefecto() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 
 		assertEquals(Estados.ABIERTO, comanda.getEstado());
 	}
 
 	@Test
 	public void fecha() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		comanda.getFecha();
 	}
 
 	@Test
 	public void importe() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		Producto pera = new Producto("Pera", "", 2.1, 5);
 		Producto manzana = new Producto("Manzana", "", 1.5, 5);
 
@@ -168,7 +168,7 @@ public class ComandaTest {
 
 	@Test
 	public void importeComandaAnulada() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		Producto pera = new Producto("Pera", "", 2.1, 5);
 		Producto manzana = new Producto("Manzana", "", 1.5, 5);
 
@@ -183,7 +183,7 @@ public class ComandaTest {
 
 	@Test
 	public void sirveProductos() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		Producto pera = new Producto("Pera", "", 2.1, 5);
 		Producto manzana = new Producto("Manzana", "", 1.5, 5);
 
@@ -200,7 +200,7 @@ public class ComandaTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void sirveProductosSinStock() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		Producto pera = new Producto("Pera", "", 2.1, 5);
 		Producto manzana = new Producto("Manzana", "", 1.5, 5);
 
@@ -215,14 +215,14 @@ public class ComandaTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void setEstadoActual() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 
 		comanda.setEstado(Estados.ABIERTO);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void setEstadoComandaPagada() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 
 		comanda.setEstado(Estados.PAGADO);
 		comanda.setEstado(Estados.CERRADO);
@@ -231,7 +231,7 @@ public class ComandaTest {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void setEstadoComandaAnulada() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 
 		comanda.setEstado(Estados.ANULADO);
 		comanda.setEstado(Estados.ABIERTO);
@@ -240,7 +240,7 @@ public class ComandaTest {
 
 	@Test
 	public void precioComandaTrasCambioPrecioProducto() {
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		Producto pera = new Producto("Pera", "", 2.1, 5);
 
 		comanda.addProducto(pera, 3);

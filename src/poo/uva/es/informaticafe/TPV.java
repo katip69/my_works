@@ -20,7 +20,7 @@ import fabricante.externo.tarjetas.TarjetaMonedero;
  */
 public class TPV {
 
-	private ArrayList<Comanda> comandas;
+	private ArrayList<ComandaLocal> comandas;
 
 	/**
 	 * Constructor de TPV
@@ -29,7 +29,7 @@ public class TPV {
 		comandas = new ArrayList<>();
 	}
 
-	private ArrayList<Comanda> getComandas() {
+	private ArrayList<ComandaLocal> getComandas() {
 		return comandas;
 	}
 
@@ -43,7 +43,7 @@ public class TPV {
 		double importe = 0;
 
 		// Itera sobre los pares HashMap creando un Map individual por cada par
-		for (Comanda comanda : getComandas()) {
+		for (ComandaLocal comanda : getComandas()) {
 			// Suma el precio de cada producto por la cantidad al importe
 			if (comanda.getFecha().toLocalDate().equals(fecha)) {
 				importe += comanda.importe();
@@ -53,11 +53,11 @@ public class TPV {
 		return importe;
 	}
 
-	private ArrayList<Comanda> comandasConEstado(LocalDate fecha, Estados estado) {
+	private ArrayList<ComandaLocal> comandasConEstado(LocalDate fecha, Estados estado) {
 
-		ArrayList<Comanda> comandasAnuladas = new ArrayList<>();
+		ArrayList<ComandaLocal> comandasAnuladas = new ArrayList<>();
 
-		for (Comanda comanda : getComandas()) {
+		for (ComandaLocal comanda : getComandas()) {
 			if (comanda.getEstado() == estado && comanda.getFecha().toLocalDate().equals(fecha)) {
 				comandasAnuladas.add(comanda);
 			}
@@ -74,7 +74,7 @@ public class TPV {
 	 *              un día en concreto
 	 * @return Una lista de comandas
 	 */
-	public List<Comanda> comandasAnuladas(LocalDate fecha) {
+	public List<ComandaLocal> comandasAnuladas(LocalDate fecha) {
 
 		return comandasConEstado(fecha, Estados.ANULADO);
 
@@ -87,7 +87,7 @@ public class TPV {
 	 *              un día en concreto
 	 * @return Una lista de comandas
 	 */
-	public List<Comanda> comandasCerradas(LocalDate fecha) {
+	public List<ComandaLocal> comandasCerradas(LocalDate fecha) {
 		return comandasConEstado(fecha, Estados.CERRADO);
 	}
 
@@ -98,7 +98,7 @@ public class TPV {
 	 *              un día en concreto
 	 * @return Una lista de comandas
 	 */
-	public List<Comanda> comandasPagadas(LocalDate fecha) {
+	public List<ComandaLocal> comandasPagadas(LocalDate fecha) {
 		return comandasConEstado(fecha, Estados.PAGADO);
 	}
 
@@ -107,7 +107,7 @@ public class TPV {
 	 * 
 	 * @param comanda comanda que queremos añadir a la lista
 	 */
-	public void addComanda(Comanda comanda) {
+	public void addComanda(ComandaLocal comanda) {
 		comandas.add(comanda);
 	}
 
@@ -116,7 +116,7 @@ public class TPV {
 	 * 
 	 * @param comanda a ser anulada
 	 */
-	public void anulaComanda(Comanda comanda) {
+	public void anulaComanda(ComandaLocal comanda) {
 		if (!getComandas().contains(comanda)) {
 			throw new IllegalArgumentException("La comanda que se quiere modificar no es parte de este TPV");
 		}
@@ -131,7 +131,7 @@ public class TPV {
 	 * @param credencial Credencial para autorizar el pago de la tarjeta
 	 * @throws IllegalArgumentException si la comanda a modificar no es parte del TPV
 	 */
-	public void pagaComanda(Comanda comanda, TarjetaMonedero tarjeta, String credencial) {
+	public void pagaComanda(ComandaLocal comanda, TarjetaMonedero tarjeta, String credencial) {
 		if (!getComandas().contains(comanda)) {
 			throw new IllegalArgumentException("La comanda no pertenece a este TPV.");
 		}
@@ -145,7 +145,7 @@ public class TPV {
 	 * 
 	 * @param comanda a ser cerrada
 	 */
-	public void cierraComanda(Comanda comanda) {
+	public void cierraComanda(ComandaLocal comanda) {
 		if (!getComandas().contains(comanda)) {
 			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
 		}
@@ -157,7 +157,7 @@ public class TPV {
 	 * 
 	 * @param comanda a ser abierta
 	 */
-	public void abreComanda(Comanda comanda) {
+	public void abreComanda(ComandaLocal comanda) {
 		if (!getComandas().contains(comanda)) {
 			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
 		}
