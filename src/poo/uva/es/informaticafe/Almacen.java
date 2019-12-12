@@ -1,7 +1,6 @@
 package poo.uva.es.informaticafe;
 
 import java.util.ArrayList;
-import poo.uva.es.informaticafe.Producto;
 
 /**
  * La clase {@link Almacen} es una implementacion de un sistema de inventario .
@@ -22,7 +21,7 @@ public class Almacen {
 	 * vacío.
 	 */
 	public Almacen() {
-		inventario = new ArrayList<Producto>();
+		inventario = new ArrayList<>();
 	}
 
 	/**
@@ -71,7 +70,7 @@ public class Almacen {
 		}
 
 		if (!existe(producto)) {
-			throw new IllegalArgumentException("El producto debe existir");
+			throw new IllegalArgumentException("El producto debe estar");
 		}
 
 		if (stock > cantidad(producto)) {

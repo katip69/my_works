@@ -1,7 +1,7 @@
 package poo.uva.es.informaticafe;
 
 import java.util.ArrayList;
-
+import java.util.List;
 import java.time.LocalDate;
 import fabricante.externo.tarjetas.TarjetaMonedero;
 
@@ -10,7 +10,7 @@ import fabricante.externo.tarjetas.TarjetaMonedero;
  * comanda que será añadida a la lista de comandas, cobrar anular o cerrar
  * comandas, obtener una lista para cada uno de los estados que puede tener la
  * comanda en un día en concreto y obtener el importe total en un día en
- * concreto (con formato año-mes-día)
+ * concreto (con formato año-mes-día).
  * 
  * 
  * @author carlgom
@@ -74,7 +74,7 @@ public class TPV {
 	 *              un día en concreto
 	 * @return Una lista de comandas
 	 */
-	public ArrayList<Comanda> comandasAnuladas(LocalDate fecha) {
+	public List<Comanda> comandasAnuladas(LocalDate fecha) {
 
 		return comandasConEstado(fecha, Estados.ANULADO);
 
@@ -87,7 +87,7 @@ public class TPV {
 	 *              un día en concreto
 	 * @return Una lista de comandas
 	 */
-	public ArrayList<Comanda> comandasCerradas(LocalDate fecha) {
+	public List<Comanda> comandasCerradas(LocalDate fecha) {
 		return comandasConEstado(fecha, Estados.CERRADO);
 	}
 
@@ -98,7 +98,7 @@ public class TPV {
 	 *              un día en concreto
 	 * @return Una lista de comandas
 	 */
-	public ArrayList<Comanda> comandasPagadas(LocalDate fecha) {
+	public List<Comanda> comandasPagadas(LocalDate fecha) {
 		return comandasConEstado(fecha, Estados.PAGADO);
 	}
 
@@ -118,7 +118,7 @@ public class TPV {
 	 */
 	public void anulaComanda(Comanda comanda) {
 		if (!getComandas().contains(comanda)) {
-			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
+			throw new IllegalArgumentException("La comanda que se quiere modificar no es parte de este TPV");
 		}
 		comanda.setEstado(Estados.ANULADO);
 	}
@@ -133,7 +133,7 @@ public class TPV {
 	 */
 	public void pagaComanda(Comanda comanda, TarjetaMonedero tarjeta, String credencial) {
 		if (!getComandas().contains(comanda)) {
-			throw new IllegalArgumentException("La comanda a modificar no es parte de este TPV.");
+			throw new IllegalArgumentException("La comanda no pertenece a este TPV.");
 		}
 		
 		tarjeta.descontarDelSaldo(credencial, comanda.importe());
