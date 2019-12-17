@@ -89,6 +89,6 @@ public class ComandaDomicilio extends Comanda {
 
 		}
 
-		return dinero;
+		return dinero + super.importe();
 	}
 }

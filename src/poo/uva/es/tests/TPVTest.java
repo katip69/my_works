@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import fabricante.externo.tarjetas.TarjetaMonedero;
 import poo.uva.es.informaticafe.Producto;
-import poo.uva.es.informaticafe.ComandaLocal;
+import poo.uva.es.informaticafe.Comanda;
 import poo.uva.es.informaticafe.TPV;
 import poo.uva.es.informaticafe.Estados;
 import static org.junit.Assert.assertEquals;
@@ -36,18 +36,18 @@ public class TPVTest {
 		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
 		String credencial = "6Z1y00Nm31aA-571";
 
-		ComandaLocal comanda1 = new ComandaLocal();
+		Comanda comanda1 = new Comanda();
 		comanda1.addProducto(new Producto("Pera", "", 1.7, 10), 5); // 5 peras a 1.7 cada una
 		tpv.addComanda(comanda1);
 		tpv.cierraComanda(comanda1);
 
-		ComandaLocal comanda2 = new ComandaLocal();
+		Comanda comanda2 = new Comanda();
 		comanda2.addProducto(new Producto("Manzana", "", 2, 10), 3); // 3 manzanas a 2 cada una
 		tpv.addComanda(comanda2);
 		tpv.pagaComanda(comanda2, tarjeta, credencial);
 		assertEquals(4, tarjeta.getSaldoActual(), 0.001);
 
-		ComandaLocal comanda3 = new ComandaLocal();
+		Comanda comanda3 = new Comanda();
 		comanda3.addProducto(new Producto("Naranja", "", 4.6, 10), 9); // 9 naranjas a 4.6 cada una
 		tpv.addComanda(comanda3);
 		tpv.anulaComanda(comanda3); // Esta comanda no deberia contar
@@ -59,7 +59,7 @@ public class TPVTest {
 	public void abreComandaFueraDeTPV() {
 		TPV tpv = new TPV();
 
-		ComandaLocal comanda = new ComandaLocal();
+		Comanda comanda = new Comanda();
 		tpv.abreComanda(comanda);
 	}
 
@@ -149,20 +149,20 @@ public class TPVTest {
 		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
 		String credencial = "6Z1y00Nm31aA-571";
 
-		ComandaLocal comanda1 = new ComandaLocal();
+		Comanda comanda1 = new Comanda();
 		tpv.addComanda(comanda1);
 		tpv.cierraComanda(comanda1);
 
-		ComandaLocal comanda2 = new ComandaLocal();
+		Comanda comanda2 = new Comanda();
 		comanda2.addProducto(new Producto("Manzana", "", 2, 10), 3); // 3 manzanas a 2 cada una
 		tpv.addComanda(comanda2);
 		tpv.pagaComanda(comanda2, tarjeta, credencial);
 
-		ComandaLocal comanda3 = new ComandaLocal();
+		Comanda comanda3 = new Comanda();
 		tpv.addComanda(comanda3);
 		tpv.anulaComanda(comanda3);
 
-		List<ComandaLocal> pagadas = tpv.comandasPagadas(comanda1.getFecha().toLocalDate());
+		List<Comanda> pagadas = tpv.comandasPagadas(comanda1.getFecha().toLocalDate());
 
 		assertTrue(pagadas.contains(comanda2));
 		assertFalse(pagadas.contains(comanda3));
