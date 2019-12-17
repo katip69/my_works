@@ -13,7 +13,7 @@ import poo.uva.es.informaticafe.Estados;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertFalse;
-	
+
 /**
  * 
  * @author carlgom
@@ -35,8 +35,6 @@ public class TPVTest {
 		TPV tpv = new TPV();
 		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
 		String credencial = "6Z1y00Nm31aA-571";
-
-
 
 		ComandaLocal comanda1 = new ComandaLocal();
 		comanda1.addProducto(new Producto("Pera", "", 1.7, 10), 5); // 5 peras a 1.7 cada una
@@ -79,7 +77,6 @@ public class TPVTest {
 		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
 		String credencial = "6Z1y00Nm31aA-571";
 
-
 		ComandaLocal comanda = new ComandaLocal();
 		tpv.pagaComanda(comanda, tarjeta, credencial);
 	}
@@ -98,8 +95,6 @@ public class TPVTest {
 
 		ComandaLocal comanda = new ComandaLocal();
 		tpv.addComanda(comanda);
-		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
-		String credencial = "6Z1y00Nm31aA-571";
 
 		tpv.cierraComanda(comanda);
 		assertEquals(Estados.CERRADO, comanda.getEstado());
@@ -107,8 +102,18 @@ public class TPVTest {
 		assertEquals(Estados.ABIERTO, comanda.getEstado());
 		tpv.anulaComanda(comanda);
 		assertEquals(Estados.ANULADO, comanda.getEstado());
-		tpv.pagaComanda(comanda,tarjeta,credencial);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void cambioAEstadoAnulada() {
+		TPV tpv = new TPV();
+		ComandaLocal comanda = new ComandaLocal();
+		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
+		String credencial = "6Z1y00Nm31aA-571";
+		tpv.addComanda(comanda);
+		tpv.pagaComanda(comanda, tarjeta, credencial);
 		assertEquals(Estados.PAGADO, comanda.getEstado());
+
 	}
 
 	@Test
@@ -144,7 +149,6 @@ public class TPVTest {
 		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
 		String credencial = "6Z1y00Nm31aA-571";
 
-
 		ComandaLocal comanda1 = new ComandaLocal();
 		tpv.addComanda(comanda1);
 		tpv.cierraComanda(comanda1);
@@ -171,7 +175,6 @@ public class TPVTest {
 		TPV tpv = new TPV();
 		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
 		String credencial = "6Z1y00Nm31aA-571";
-
 
 		ComandaLocal comanda1 = new ComandaLocal();
 		tpv.addComanda(comanda1);
