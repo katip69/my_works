@@ -15,7 +15,6 @@ import poo.uva.es.informaticafe.*;
 public class ComboTest {
 	private static final String NOMBRE = "Nombre";
 	private static final String DESCRIPCION = "Descripcion generica";
-	
 
 	@Test
 	public void comboVacio() {
@@ -195,6 +194,96 @@ public class ComboTest {
 		Combo combo = new Combo(NOMBRE, DESCRIPCION);
 
 		combo.insertarProducto(cheeseburger, 0);
+
+	}
+
+	@Test
+	public void eliminarStockProductoUnico() {
+
+		// Producto a 3 euros (200 ud.)
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
+
+		Combo combo = new Combo(NOMBRE, DESCRIPCION);
+
+		combo.insertarProducto(cheeseburger, 1);
+
+		combo.reducirStock(1);
+
+		assertEquals(199, cheeseburger.unidadesDisponibles());
+		assertEquals(199, combo.unidadesDisponibles());
+
+	}
+
+	@Test
+	public void eliminarStockProductoUnicoMultiplesUnidades() {
+
+		// Producto a 3 euros (200 ud.)
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
+
+		Combo combo = new Combo(NOMBRE, DESCRIPCION);
+
+		combo.insertarProducto(cheeseburger, 2);
+
+		combo.reducirStock(1);
+
+		assertEquals(198, cheeseburger.unidadesDisponibles());
+		assertEquals((long) (200 / 2) - 1, combo.unidadesDisponibles());
+
+		combo.reducirStock(3);
+
+		assertEquals(192, cheeseburger.unidadesDisponibles());
+		assertEquals((long) (200 / 2) - 4, combo.unidadesDisponibles());
+
+	}
+
+	@Test
+	public void eliminarStockMultiplesProductos() {
+
+		// Producto a 3 euros (200 ud.)
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
+		Producto burger = new Producto(NOMBRE, DESCRIPCION, 3, 30);
+
+		Combo combo = new Combo(NOMBRE, DESCRIPCION);
+
+		combo.insertarProducto(cheeseburger, 1);
+		combo.insertarProducto(burger, 1);
+
+		combo.reducirStock(1);
+
+		assertEquals(199, cheeseburger.unidadesDisponibles());
+		assertEquals(29, burger.unidadesDisponibles());
+		assertEquals(29, combo.unidadesDisponibles());
+
+		combo.reducirStock(3);
+
+		assertEquals(196, cheeseburger.unidadesDisponibles());
+		assertEquals(26, burger.unidadesDisponibles());
+		assertEquals(26, combo.unidadesDisponibles());
+	}
+	
+	@Test
+	public void eliminarStockMultiplesProductosMultiplesUnidades() {
+
+		// Producto a 3 euros (200 ud.)
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
+		Producto burger = new Producto(NOMBRE, DESCRIPCION, 3, 198);
+
+		Combo combo = new Combo(NOMBRE, DESCRIPCION);
+
+		combo.insertarProducto(cheeseburger, 2);
+		combo.insertarProducto(burger, 1);
+
+		combo.reducirStock(1);
+
+		assertEquals(198, cheeseburger.unidadesDisponibles());
+		assertEquals(197, burger.unidadesDisponibles());
+		assertEquals(100 - 1, combo.unidadesDisponibles());
+		
+		combo.reducirStock(3);
+
+		assertEquals(192, cheeseburger.unidadesDisponibles());
+		assertEquals(194, burger.unidadesDisponibles());
+		assertEquals(100 - 4, combo.unidadesDisponibles());
 
 	}
 }

@@ -144,4 +144,31 @@ public class Combo extends Vendible {
 	public boolean vacio() {
 		return getProductos().isEmpty();
 	}
+
+	/**
+	 * Reduce el stock de los productos que forman parte del combo conforme al
+	 * numero de unidades que forman parte de este.
+	 * 
+	 * @param decremento numero de veces que substraer las unidades de combo de los
+	 *                   productos
+	 * @throws IllegalArgumentException El incremento debe ser un número
+	 *                                  estrictamente positivo
+	 * @throws IllegalArgumentException Cuando hay más unidades a decrementar de las
+	 *                                  unidades disponibles
+	 */
+	@Override
+	public void reducirStock(int decremento) {
+		if (decremento <= 0) {
+			throw new IllegalArgumentException("El decremento no puede ser igual o menor a 0.");
+		}
+		if (unidadesDisponibles() - decremento < 0) {
+			throw new IllegalArgumentException("El decremento no puede ser mayor a las unidades disponibles.");
+		}
+
+		for (int i = 0; i < decremento; i++) {
+			for (Map.Entry<Producto, Integer> par : getProductos().entrySet()) {
+				par.getKey().reducirStock(par.getValue());
+			}
+		}
+	}
 }

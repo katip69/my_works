@@ -50,6 +50,13 @@ public abstract class Vendible {
 	 * @return precio del vendible
 	 */
 	public abstract double precio();
+	
+	/**
+	 * Reduce el stock de un vendible
+	 * 
+	 * @param cantidad cantidad de vendibles a reducir
+	 */
+	public abstract void reducirStock(int cantidad);
 
 	/**
 	 * Devuelve las unidades disponibles del vendible.
