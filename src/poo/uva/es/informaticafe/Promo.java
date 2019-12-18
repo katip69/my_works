@@ -138,13 +138,7 @@ public class Promo extends Vendible {
 	 */
 	public boolean disponible() {
 		LocalDateTime currentDate = LocalDateTime.now();
-		if (getFechaInicio().isAfter(currentDate)) {
-			return false;
-		}
-		if (getFechaFin().isBefore(currentDate)) {
-			return false;
-		}
+		return !(getFechaInicio().isAfter(currentDate) || getFechaFin().isBefore(currentDate));
 
-		return true;
 	}
 }

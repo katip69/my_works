@@ -41,7 +41,8 @@ public class Almacen {
 	 * 
 	 * @param producto Producto del que se quiere aumentar stock
 	 * @param stock    cantidad a aumentar el stock (ha de ser mayor que 0)
-	 * @throws IllegalArgumentException cuando el stock es invalido {@code stock <= 0}
+	 * @throws IllegalArgumentException cuando el stock es invalido
+	 *                                  {@code stock <= 0}
 	 * @throws IllegalArgumentException cuando el producto no existe en el almacen
 	 */
 	public void incrementarStock(Producto producto, int stock) {
@@ -62,7 +63,8 @@ public class Almacen {
 	 * 
 	 * @param producto Producto del que se quiere remover stock
 	 * @param stock    cantidad a reducir el stock (ha de ser mayor que 0)
-	 * @throws IllegalArgumentException cuando el stock es invalido {@code stock <= 0}
+	 * @throws IllegalArgumentException cuando el stock es invalido
+	 *                                  {@code stock <= 0}
 	 * @throws IllegalArgumentException cuando el producto no existe en el almacen
 	 * @throws IllegalArgumentException cuando no hay suficiente stock del producto
 	 */
@@ -86,7 +88,8 @@ public class Almacen {
 	 * Elimina un {@link Vendible} del almacen.
 	 * 
 	 * @param vendible Nombre del {@link Vendible} a eliminar
-	 * @throws IllegalArgumentException cuando el {@link Vendible} no existe en el almacen
+	 * @throws IllegalArgumentException cuando el {@link Vendible} no existe en el
+	 *                                  almacen
 	 */
 	public void eliminar(Vendible vendible) {
 		if (!existe(vendible)) {
@@ -99,8 +102,10 @@ public class Almacen {
 	/**
 	 * Comprueba la existencia de un {@link Vendible} en el almacen.
 	 * 
-	 * @param vendible {@link Vendible} del que se quiere comprobar si existe en el almacen
-	 * @return true si el {@link Vendible} existe en el almacen, false en caso contrario
+	 * @param vendible {@link Vendible} del que se quiere comprobar si existe en el
+	 *                 almacen
+	 * @return true si el {@link Vendible} existe en el almacen, false en caso
+	 *         contrario
 	 */
 	public boolean existe(Vendible vendible) {
 		return inventario.contains(vendible);

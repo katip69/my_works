@@ -16,18 +16,21 @@ import poo.uva.es.informaticafe.*;
  * @version 1.0
  */
 public class PromoTest {
+	private static final String NOMBRE_PROMO = "Nombre Promocion";
+	private static final String NOMBRE_PRODUCTO = "Nombre Producto";
+	private static final String DESCRIPCION = "Descripcion generica";
 
 	@Test
 	public void promoVacia() {
 		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
 		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
 
-		Promo promo = new Promo("Promocion #3", "Test", 2, fechaInicio, fechaFin);
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 2, fechaInicio, fechaFin);
 
 		assertEquals(2, promo.precio(), 0.001);
 		assertEquals(0, promo.unidadesDisponibles());
-		assertEquals("Promocion #3", promo.nombre());
-		assertEquals("Test", promo.descripcion());
+		assertEquals(NOMBRE_PROMO, promo.nombre());
+		assertEquals(DESCRIPCION, promo.descripcion());
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -35,7 +38,7 @@ public class PromoTest {
 		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
 		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
 
-		new Promo("Promocion #3", "Test", 0, fechaFin, fechaInicio);
+		new Promo(NOMBRE_PROMO, DESCRIPCION, 0, fechaFin, fechaInicio);
 
 	}
 
@@ -44,7 +47,7 @@ public class PromoTest {
 		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
 		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
 
-		new Promo("Promocion #3", "Test", -20, fechaInicio, fechaFin);
+		new Promo(NOMBRE_PROMO, DESCRIPCION, -20, fechaInicio, fechaFin);
 
 	}
 
@@ -53,8 +56,8 @@ public class PromoTest {
 		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
 		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
 
-		Promo promo = new Promo("Promocion #3", "Test", 2, fechaInicio, fechaFin);
-		promo.insertarProducto(new Producto("McDalena", "bolleria industrial", 10, 200));
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 2, fechaInicio, fechaFin);
+		promo.insertarProducto(new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 200));
 
 		assertEquals(2, promo.precio(), 0.001);
 		assertEquals(200, promo.unidadesDisponibles());
@@ -66,9 +69,9 @@ public class PromoTest {
 		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
 		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
 
-		Producto mcDalena = new Producto("McDalena", "bolleria industrial", 10, 200);
+		Producto mcDalena = new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 200);
 
-		Promo promo = new Promo("Promocion #3", "Test", 2, fechaInicio, fechaFin);
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 2, fechaInicio, fechaFin);
 		promo.insertarProducto(mcDalena);
 		assertTrue(promo.tieneProducto(mcDalena));
 
@@ -81,9 +84,9 @@ public class PromoTest {
 		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
 		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
 
-		Producto mcDalena = new Producto("McDalena", "bolleria industrial", 10, 200);
+		Producto mcDalena = new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 200);
 
-		Promo promo = new Promo("Promocion #3", "Test", 2, fechaInicio, fechaFin);
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 2, fechaInicio, fechaFin);
 
 		promo.eliminaProducto(mcDalena);
 	}
@@ -93,9 +96,9 @@ public class PromoTest {
 		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
 		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
 
-		Promo promo = new Promo("Promocion #3", "Test", 15, fechaInicio, fechaFin);
-		promo.insertarProducto(new Producto("McDalena", "bolleria industrial", 10, 200));
-		promo.insertarProducto(new Producto("McMuffin", "bolleria industrial importada", 20, 40));
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 15, fechaInicio, fechaFin);
+		promo.insertarProducto(new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 200));
+		promo.insertarProducto(new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 20, 40));
 
 		assertEquals(15, promo.precio(), 0.001);
 		assertEquals(40, promo.unidadesDisponibles());
@@ -106,9 +109,9 @@ public class PromoTest {
 	public void promoConMismoProductoRepetido() {
 		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
 		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
-		Producto producto = new Producto("McDalena", "bolleria industrial", 10, 200);
+		Producto producto = new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 200);
 
-		Promo promo = new Promo("Promocion #3", "Test", 15, fechaInicio, fechaFin);
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 15, fechaInicio, fechaFin);
 		promo.insertarProducto(producto);
 		promo.insertarProducto(producto);
 	}
@@ -120,7 +123,7 @@ public class PromoTest {
 		LocalDateTime fechaInicio = LocalDateTime.now().minusDays(3);
 		LocalDateTime fechaFin = LocalDateTime.now().plusDays(3);
 
-		Promo promo = new Promo("Promocion #3", "Test", 15, fechaInicio, fechaFin);
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 15, fechaInicio, fechaFin);
 		assertTrue(promo.disponible());
 	}
 
@@ -131,7 +134,7 @@ public class PromoTest {
 		LocalDateTime fechaInicio = LocalDateTime.now().plusDays(2);
 		LocalDateTime fechaFin = LocalDateTime.now().plusDays(4);
 
-		Promo promo = new Promo("Promocion #3", "Test", 15, fechaInicio, fechaFin);
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 15, fechaInicio, fechaFin);
 		assertFalse(promo.disponible());
 	}
 
@@ -142,7 +145,7 @@ public class PromoTest {
 		LocalDateTime fechaInicio = LocalDateTime.now().minusDays(4);
 		LocalDateTime fechaFin = LocalDateTime.now().minusDays(2);
 
-		Promo promo = new Promo("Promocion #3", "Test", 15, fechaInicio, fechaFin);
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 15, fechaInicio, fechaFin);
 		assertFalse(promo.disponible());
 	}
 }

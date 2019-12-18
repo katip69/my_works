@@ -13,8 +13,9 @@ import poo.uva.es.informaticafe.*;
  * @version 1.0
  */
 public class ComboTest {
-	private final String NOMBRE = "McCombo";
-	private final String DESCRIPCION = "DESCRIPCION generica de McCombo";
+	private static final String NOMBRE = "Nombre";
+	private static final String DESCRIPCION = "Descripcion generica";
+	
 
 	@Test
 	public void comboVacio() {
@@ -32,7 +33,7 @@ public class ComboTest {
 	public void comboConProducto() {
 
 		// Producto a 3 euros (200 ud.)
-		Producto cheeseburger = new Producto("Cheeseburger", "Hamburguesa con queso", 3, 200);
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
 
 		Combo combo = new Combo(NOMBRE, DESCRIPCION);
 
@@ -46,7 +47,7 @@ public class ComboTest {
 	public void comboConMismoProductoMultiplesVeces() {
 
 		// Producto a 3 euros (200 ud.)
-		Producto cheeseburger = new Producto("Cheeseburger", "Hamburguesa con queso", 3, 200);
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
 
 		Combo combo = new Combo(NOMBRE, DESCRIPCION);
 
@@ -60,7 +61,7 @@ public class ComboTest {
 	public void comboConDistintoProducto() {
 
 		// Producto a 3 euros (200 ud.)
-		Producto cheeseburger = new Producto("Cheeseburger", "Hamburguesa con queso", 3, 200);
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
 		// Producto a 2.4 euros (350 ud.)
 		Producto burger = new Producto("Burger", "Hamburguesa sin nada", 2.4, 350);
 
@@ -77,7 +78,7 @@ public class ComboTest {
 	public void comboConDistintoProductoMultiplesUnidades() {
 
 		// Producto a 3 euros (200 ud.)
-		Producto cheeseburger = new Producto("Cheeseburger", "Hamburguesa con queso", 3, 200);
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
 		// Producto a 2.4 euros (350 ud.)
 		Producto burger = new Producto("Burger", "Hamburguesa sin nada", 2.4, 350);
 
@@ -94,7 +95,7 @@ public class ComboTest {
 	public void incrementaCantidadProducto() {
 
 		// Producto a 3 euros (200 ud.)
-		Producto cheeseburger = new Producto("Cheeseburger", "Hamburguesa con queso", 3, 200);
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
 
 		Combo combo = new Combo(NOMBRE, DESCRIPCION);
 
@@ -108,7 +109,7 @@ public class ComboTest {
 	public void eliminaProductoDeCombo() {
 
 		// Producto a 3 euros (200 ud.)
-		Producto cheeseburger = new Producto("Cheeseburger", "Hamburguesa con queso", 3, 200);
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
 
 		Combo combo = new Combo(NOMBRE, DESCRIPCION);
 
@@ -124,7 +125,7 @@ public class ComboTest {
 	public void eliminaProductoInexistente() {
 
 		// Producto a 3 euros (200 ud.)
-		Producto cheeseburger = new Producto("Cheeseburger", "Hamburguesa con queso", 3, 200);
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
 
 		Combo combo = new Combo(NOMBRE, DESCRIPCION);
 
@@ -135,7 +136,7 @@ public class ComboTest {
 	public void eliminaProductoConMultiplesUnidadesDeCombo() {
 
 		// Producto a 3 euros (200 ud.)
-		Producto cheeseburger = new Producto("Cheeseburger", "Hamburguesa con queso", 3, 200);
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
 
 		Combo combo = new Combo(NOMBRE, DESCRIPCION);
 
@@ -151,7 +152,7 @@ public class ComboTest {
 	public void modificaUnidadesProducto() {
 
 		// Producto a 3 euros (200 ud.)
-		Producto cheeseburger = new Producto("Cheeseburger", "Hamburguesa con queso", 3, 200);
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
 
 		Combo combo = new Combo(NOMBRE, DESCRIPCION);
 
@@ -166,7 +167,7 @@ public class ComboTest {
 	public void modificaUnidadesProductoInvalido() {
 
 		// Producto a 3 euros (200 ud.)
-		Producto cheeseburger = new Producto("Cheeseburger", "Hamburguesa con queso", 3, 200);
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
 
 		Combo combo = new Combo(NOMBRE, DESCRIPCION);
 
@@ -178,7 +179,7 @@ public class ComboTest {
 	public void modificaUnidadesProductoInexistente() {
 
 		// Producto a 3 euros (200 ud.)
-		Producto cheeseburger = new Producto("Cheeseburger", "Hamburguesa con queso", 3, 200);
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
 
 		Combo combo = new Combo(NOMBRE, DESCRIPCION);
 
@@ -189,7 +190,7 @@ public class ComboTest {
 	public void insertarProductoConCantidadInvalida() {
 
 		// Producto a 3 euros (200 ud.)
-		Producto cheeseburger = new Producto("Cheeseburger", "Hamburguesa con queso", 3, 200);
+		Producto cheeseburger = new Producto(NOMBRE, DESCRIPCION, 3, 200);
 
 		Combo combo = new Combo(NOMBRE, DESCRIPCION);
 
