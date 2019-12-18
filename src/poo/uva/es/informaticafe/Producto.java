@@ -96,6 +96,7 @@ public class Producto extends Vendible {
 	 * Cambia el precio del producto, no puede ser negativo
 	 * 
 	 * @param precio nuevo precio del producto
+	 * @throws IllegalArgumentException cuando el precio es negativo
 	 */
 	public void cambiaPrecio(double precio) {
 		if (precio < 0) {

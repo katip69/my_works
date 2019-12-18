@@ -29,6 +29,7 @@ public class Promo extends Vendible {
 	 * @param fechaInicio Momento en el que la promocion se vuelve disponible
 	 * @param fechaFin    Momento en el que la promocion deja de estar disponible.
 	 *                    Ha de ser posterior a {@code fechaInicio}.
+	 * @throws IllegalArgumentException cuando la fecha de fin de la promocion es anterior a la fecha de inicio
 	 */
 	public Promo(String nombre, String descripcion, double precio, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
 		super(nombre, descripcion);
@@ -46,6 +47,7 @@ public class Promo extends Vendible {
 	 * Cambia el precio del producto, no puede ser negativo
 	 * 
 	 * @param precio nuevo precio del producto
+	 * @throws IllegalArgumentException cuando el precio es negativo
 	 */
 	public void cambiaPrecio(double precio) {
 		if (precio < 0) {
