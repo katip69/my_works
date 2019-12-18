@@ -1,10 +1,10 @@
 package poo.uva.es.tests;
 
 import org.junit.Test;
-import poo.uva.es.informaticafe.Producto;
-import poo.uva.es.informaticafe.Almacen;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import poo.uva.es.informaticafe.*;
+import static org.junit.Assert.*;
+
+import java.time.LocalDateTime;
 
 /**
  * Colección de test de la clase Almacen
@@ -17,6 +17,9 @@ import static org.junit.Assert.assertTrue;
 
 public class AlmacenTest {
 
+	private final LocalDateTime PROMO_INICIO = LocalDateTime.of(2019, 12, 10, 0, 0);
+	private final LocalDateTime PROMO_FIN = LocalDateTime.of(2019, 12, 10, 23, 59);
+
 	@Test
 	public void creaAlmacen() {
 
@@ -26,12 +29,23 @@ public class AlmacenTest {
 	}
 
 	@Test
-	public void productoAnadido() {
-		Almacen prueba = new Almacen();
-		Producto pera = new Producto("Pera", "Fruta", 2.0);
+	public void almacenConVendibles() {
+		Almacen almacen = new Almacen();
 
-		prueba.creaProducto(pera);
-		assertTrue(prueba.existe(pera));
+		Producto pera = new Producto("Pera", "Fruta", 2.0, 100);
+		Promo peraEnOferta = new Promo("Pera en oferta", "Van a caducar", 1, PROMO_INICIO, PROMO_FIN);
+		Combo multiplesPeras = new Combo("Pack de peras", "Dos peras juntas");
+		multiplesPeras.insertarProducto(pera);
+		multiplesPeras.insertarProducto(pera);
+
+		almacen.insertaVendible(pera);
+		almacen.insertaVendible(peraEnOferta);
+		almacen.insertaVendible(multiplesPeras);
+
+		assertTrue(almacen.existe(pera));
+		assertTrue(almacen.existe(peraEnOferta));
+		assertTrue(almacen.existe(multiplesPeras));
+
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -52,7 +66,7 @@ public class AlmacenTest {
 	public void stockIncrementadoCorrecto() {
 		Producto pera = new Producto("Pera", "Fruta", 2.0, 0);
 		Almacen prueba = new Almacen();
-		prueba.creaProducto(pera);
+		prueba.insertaVendible(pera);
 		prueba.incrementarStock(pera, 2);
 		assertEquals(2, pera.unidadesDisponibles());
 	}
@@ -68,7 +82,7 @@ public class AlmacenTest {
 	public void stockReducirProductoStockNegativo() {
 		Producto pera = new Producto("Pera", "Fruta", 2.0, 3);
 		Almacen prueba = new Almacen();
-		prueba.creaProducto(pera);
+		prueba.insertaVendible(pera);
 		prueba.removerStock(pera, -8);
 	}
 
@@ -76,7 +90,7 @@ public class AlmacenTest {
 	public void stockReducirProductoNoHaySuficienteStock() {
 		Producto pera = new Producto("Pera", "Fruta", 2.0, 1);
 		Almacen prueba = new Almacen();
-		prueba.creaProducto(pera);
+		prueba.insertaVendible(pera);
 		prueba.removerStock(pera, 4);
 
 	}
@@ -85,7 +99,7 @@ public class AlmacenTest {
 	public void stockReducirProducto() {
 		Producto pera = new Producto("Pera", "Fruta", 2.0, 6);
 		Almacen prueba = new Almacen();
-		prueba.creaProducto(pera);
+		prueba.insertaVendible(pera);
 		prueba.removerStock(pera, 4);
 		assertEquals(2, pera.unidadesDisponibles());
 
@@ -101,12 +115,13 @@ public class AlmacenTest {
 
 	@Test
 	public void EliminarProducto() {
-		Producto pera = new Producto("Pera", "Fruta", 2, 1);
-		Almacen prueba = new Almacen();
-		prueba.creaProducto(pera);
-		prueba.eliminar(pera);
-		assertEquals(false, prueba.existe(pera));
+		Almacen almacen = new Almacen();
+		Producto pera = new Producto("Pera", "Fruta", 2.0, 100);
 
+		almacen.insertaVendible(pera);
+		assertTrue(almacen.existe(pera));
+		almacen.eliminar(pera);
+		assertFalse(almacen.existe(pera));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -120,7 +135,7 @@ public class AlmacenTest {
 	public void cantidadProductoExiste() {
 		Almacen prueba = new Almacen();
 		Producto pera = new Producto("Pera", "Fruta", 2.0, 6);
-		prueba.creaProducto(pera);
+		prueba.insertaVendible(pera);
 		assertEquals(6, prueba.cantidad(pera));
 	}
 
