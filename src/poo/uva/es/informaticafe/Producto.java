@@ -82,6 +82,7 @@ public class Producto extends Vendible {
 	 * @throws IllegalArgumentException Cuando hay más unidades a decrementar de las
 	 *                                  unidades disponibles
 	 */
+	@Override
 	public void reducirStock(int decremento) {
 		if (decremento <= 0) {
 			throw new IllegalArgumentException("El decremento no puede ser igual o menor a 0.");

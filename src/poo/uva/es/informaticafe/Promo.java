@@ -29,7 +29,8 @@ public class Promo extends Vendible {
 	 * @param fechaInicio Momento en el que la promocion se vuelve disponible
 	 * @param fechaFin    Momento en el que la promocion deja de estar disponible.
 	 *                    Ha de ser posterior a {@code fechaInicio}.
-	 * @throws IllegalArgumentException cuando la fecha de fin de la promocion es anterior a la fecha de inicio
+	 * @throws IllegalArgumentException cuando la fecha de fin de la promocion es
+	 *                                  anterior a la fecha de inicio
 	 */
 	public Promo(String nombre, String descripcion, double precio, LocalDateTime fechaInicio, LocalDateTime fechaFin) {
 		super(nombre, descripcion);
@@ -142,5 +143,30 @@ public class Promo extends Vendible {
 		LocalDateTime currentDate = LocalDateTime.now();
 		return !(getFechaInicio().isAfter(currentDate) || getFechaFin().isBefore(currentDate));
 
+	}
+
+	/**
+	 * Reduce el stock de los productos que forman parte de la promocion
+	 * 
+	 * @param decremento numero de veces que substraer los productos de la promocion
+	 * @throws IllegalArgumentException El incremento debe ser un número
+	 *                                  estrictamente positivo
+	 * @throws IllegalArgumentException Cuando hay más unidades a decrementar de las
+	 *                                  unidades disponibles
+	 */
+	@Override
+	public void reducirStock(int decremento) {
+		if (decremento <= 0) {
+			throw new IllegalArgumentException("El decremento no puede ser igual o menor a 0.");
+		}
+		if (unidadesDisponibles() - decremento < 0) {
+			throw new IllegalArgumentException("El decremento no puede ser mayor a las unidades disponibles.");
+		}
+
+		for (int i = 0; i < decremento; i++) {
+			for (Producto producto : getProductos()) {
+				producto.reducirStock(1);
+			}
+		}
 	}
 }

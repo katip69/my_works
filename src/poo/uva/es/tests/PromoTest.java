@@ -19,13 +19,12 @@ public class PromoTest {
 	private static final String NOMBRE_PROMO = "Nombre Promocion";
 	private static final String NOMBRE_PRODUCTO = "Nombre Producto";
 	private static final String DESCRIPCION = "Descripcion generica";
+	private static final LocalDateTime FECHA_INICIO = LocalDateTime.of(2019, 12, 1, 0, 0);
+	private static final LocalDateTime FECHA_FIN = LocalDateTime.of(2019, 12, 1, 23, 59);
 
 	@Test
 	public void promoVacia() {
-		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
-		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
-
-		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 2, fechaInicio, fechaFin);
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 2, FECHA_INICIO, FECHA_FIN);
 
 		assertEquals(2, promo.precio(), 0.001);
 		assertEquals(0, promo.unidadesDisponibles());
@@ -35,28 +34,21 @@ public class PromoTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void promoConFechasInvalidas() {
-		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
-		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
-
-		new Promo(NOMBRE_PROMO, DESCRIPCION, 0, fechaFin, fechaInicio);
+		new Promo(NOMBRE_PROMO, DESCRIPCION, 0, FECHA_FIN, FECHA_INICIO);
 
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void promoConPrecioInvalido() {
-		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
-		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
 
-		new Promo(NOMBRE_PROMO, DESCRIPCION, -20, fechaInicio, fechaFin);
+		new Promo(NOMBRE_PROMO, DESCRIPCION, -20, FECHA_INICIO, FECHA_FIN);
 
 	}
 
 	@Test
 	public void promoConProducto() {
-		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
-		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
 
-		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 2, fechaInicio, fechaFin);
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 2, FECHA_INICIO, FECHA_FIN);
 		promo.insertarProducto(new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 200));
 
 		assertEquals(2, promo.precio(), 0.001);
@@ -66,12 +58,10 @@ public class PromoTest {
 
 	@Test
 	public void eliminaProductoDePromo() {
-		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
-		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
 
 		Producto mcDalena = new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 200);
 
-		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 2, fechaInicio, fechaFin);
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 2, FECHA_INICIO, FECHA_FIN);
 		promo.insertarProducto(mcDalena);
 		assertTrue(promo.tieneProducto(mcDalena));
 
@@ -81,22 +71,17 @@ public class PromoTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void eliminaProductoNoExistente() {
-		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
-		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
-
 		Producto mcDalena = new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 200);
 
-		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 2, fechaInicio, fechaFin);
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 2, FECHA_INICIO, FECHA_FIN);
 
 		promo.eliminaProducto(mcDalena);
 	}
 
 	@Test
 	public void promoConMultiplesProductos() {
-		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
-		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
 
-		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 15, fechaInicio, fechaFin);
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 15, FECHA_INICIO, FECHA_FIN);
 		promo.insertarProducto(new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 200));
 		promo.insertarProducto(new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 20, 40));
 
@@ -107,11 +92,10 @@ public class PromoTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void promoConMismoProductoRepetido() {
-		LocalDateTime fechaInicio = LocalDateTime.of(2019, 12, 1, 0, 0);
-		LocalDateTime fechaFin = LocalDateTime.of(2019, 12, 1, 23, 59);
+
 		Producto producto = new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 200);
 
-		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 15, fechaInicio, fechaFin);
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 15, FECHA_INICIO, FECHA_FIN);
 		promo.insertarProducto(producto);
 		promo.insertarProducto(producto);
 	}
@@ -147,5 +131,70 @@ public class PromoTest {
 
 		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 15, fechaInicio, fechaFin);
 		assertFalse(promo.disponible());
+	}
+
+	@Test
+	public void reducirStockPromo() {
+		Producto producto = new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 200);
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 15, FECHA_INICIO, FECHA_FIN);
+
+		promo.insertarProducto(producto);
+
+		promo.reducirStock(1);
+
+		assertEquals(199, producto.unidadesDisponibles());
+		assertEquals(199, promo.unidadesDisponibles());
+	}
+
+	@Test
+	public void reducirStockPromoMultiplesVeces() {
+		Producto producto = new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 200);
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 15, FECHA_INICIO, FECHA_FIN);
+
+		promo.insertarProducto(producto);
+
+		promo.reducirStock(20);
+
+		assertEquals(180, producto.unidadesDisponibles());
+		assertEquals(180, promo.unidadesDisponibles());
+	}
+
+	@Test
+	public void reducirStockMultiplesProductos() {
+		Producto producto1 = new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 50);
+		Producto producto2 = new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 30);
+
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 15, FECHA_INICIO, FECHA_FIN);
+
+		promo.insertarProducto(producto1);
+		promo.insertarProducto(producto2);
+
+		promo.reducirStock(18);
+
+		assertEquals(50 - 18, producto1.unidadesDisponibles());
+		assertEquals(30 - 18, producto2.unidadesDisponibles());
+		assertEquals(30 - 18, promo.unidadesDisponibles());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void reducirStockPorDebajoDelDisponible() {
+		Producto producto = new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 5);
+
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 15, FECHA_INICIO, FECHA_FIN);
+
+		promo.insertarProducto(producto);
+
+		promo.reducirStock(10);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void reducirStockInvalido() {
+		Producto producto = new Producto(NOMBRE_PRODUCTO, DESCRIPCION, 10, 5);
+
+		Promo promo = new Promo(NOMBRE_PROMO, DESCRIPCION, 15, FECHA_INICIO, FECHA_FIN);
+
+		promo.insertarProducto(producto);
+
+		promo.reducirStock(-2);
 	}
 }
