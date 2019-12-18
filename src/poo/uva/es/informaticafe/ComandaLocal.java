@@ -12,7 +12,7 @@ import java.util.Map;
  * @author carlgom
  * @author manmend
  * @author migrase
- * @version 1.0
+ * @version 2.0
  */
 
 public class ComandaLocal extends Comanda {

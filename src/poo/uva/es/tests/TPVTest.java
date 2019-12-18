@@ -8,7 +8,10 @@ import org.junit.Test;
 import fabricante.externo.tarjetas.TarjetaMonedero;
 import poo.uva.es.informaticafe.Producto;
 import poo.uva.es.informaticafe.Comanda;
+import poo.uva.es.informaticafe.ComandaDomicilio;
+import poo.uva.es.informaticafe.ComandaLocal;
 import poo.uva.es.informaticafe.TPV;
+import poo.uva.es.informaticafe.Zona;
 import poo.uva.es.informaticafe.Estados;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -31,23 +34,48 @@ public class TPVTest {
 	}
 
 	@Test
-	public void calcularImporte() {
+	public void calcularImporteComandaLocal() {
 		TPV tpv = new TPV();
 		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
 		String credencial = "6Z1y00Nm31aA-571";
 
-		Comanda comanda1 = new Comanda();
+		ComandaLocal comanda1 = new ComandaLocal();
 		comanda1.addProducto(new Producto("Pera", "", 1.7, 10), 5); // 5 peras a 1.7 cada una
 		tpv.addComanda(comanda1);
 		tpv.cierraComanda(comanda1);
 
-		Comanda comanda2 = new Comanda();
+		ComandaLocal comanda2 = new ComandaLocal();
 		comanda2.addProducto(new Producto("Manzana", "", 2, 10), 3); // 3 manzanas a 2 cada una
 		tpv.addComanda(comanda2);
 		tpv.pagaComanda(comanda2, tarjeta, credencial);
 		assertEquals(4, tarjeta.getSaldoActual(), 0.001);
 
-		Comanda comanda3 = new Comanda();
+		ComandaLocal comanda3 = new ComandaLocal();
+		comanda3.addProducto(new Producto("Naranja", "", 4.6, 10), 9); // 9 naranjas a 4.6 cada una
+		tpv.addComanda(comanda3);
+		tpv.anulaComanda(comanda3); // Esta comanda no deberia contar
+
+		assertEquals(1.7 * 5 + 2 * 3, tpv.importeTotal(comanda1.getFecha().toLocalDate()), 0.001);
+	}
+	
+	@Test
+	public void calcularImporteComandaDomicilio() {
+		TPV tpv = new TPV();
+		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
+		String credencial = "6Z1y00Nm31aA-571";
+
+		ComandaDomicilio comanda1 = new ComandaDomicilio("Real",Zona.ZONA1);
+		comanda1.addProducto(new Producto("Pera", "", 1.7, 10), 5); // 5 peras a 1.7 cada una
+		tpv.addComanda(comanda1);
+		tpv.cierraComanda(comanda1);
+
+		ComandaDomicilio comanda2 = new ComandaDomicilio("Real",Zona.ZONA1);
+		comanda2.addProducto(new Producto("Manzana", "", 2, 10), 3); // 3 manzanas a 2 cada una
+		tpv.addComanda(comanda2);
+		tpv.pagaComanda(comanda2, tarjeta, credencial);
+		assertEquals(4, tarjeta.getSaldoActual(), 0.001);
+
+		ComandaDomicilio comanda3 = new ComandaDomicilio("Real",Zona.ZONA1);
 		comanda3.addProducto(new Producto("Naranja", "", 4.6, 10), 9); // 9 naranjas a 4.6 cada una
 		tpv.addComanda(comanda3);
 		tpv.anulaComanda(comanda3); // Esta comanda no deberia contar
@@ -59,7 +87,7 @@ public class TPVTest {
 	public void abreComandaFueraDeTPV() {
 		TPV tpv = new TPV();
 
-		Comanda comanda = new Comanda();
+		ComandaLocal comanda = new ComandaLocal();
 		tpv.abreComanda(comanda);
 	}
 
@@ -135,7 +163,7 @@ public class TPVTest {
 		tpv.addComanda(comanda3);
 		tpv.anulaComanda(comanda3);
 
-		List<ComandaLocal> anuladas = tpv.comandasAnuladas(comanda1.getFecha().toLocalDate());
+		List<Comanda> anuladas = tpv.comandasAnuladas(comanda1.getFecha().toLocalDate());
 
 		assertTrue(anuladas.contains(comanda3));
 		assertFalse(anuladas.contains(comanda2));
@@ -149,16 +177,16 @@ public class TPVTest {
 		TarjetaMonedero tarjeta = new TarjetaMonedero("A156Bv09_1zXo894", 10);
 		String credencial = "6Z1y00Nm31aA-571";
 
-		Comanda comanda1 = new Comanda();
+		ComandaLocal comanda1 = new ComandaLocal();
 		tpv.addComanda(comanda1);
 		tpv.cierraComanda(comanda1);
 
-		Comanda comanda2 = new Comanda();
+		ComandaLocal comanda2 = new ComandaLocal();
 		comanda2.addProducto(new Producto("Manzana", "", 2, 10), 3); // 3 manzanas a 2 cada una
 		tpv.addComanda(comanda2);
 		tpv.pagaComanda(comanda2, tarjeta, credencial);
 
-		Comanda comanda3 = new Comanda();
+		ComandaLocal comanda3 = new ComandaLocal();
 		tpv.addComanda(comanda3);
 		tpv.anulaComanda(comanda3);
 
@@ -189,7 +217,7 @@ public class TPVTest {
 		tpv.addComanda(comanda3);
 		tpv.anulaComanda(comanda3);
 
-		List<ComandaLocal> cerradas = tpv.comandasCerradas(comanda1.getFecha().toLocalDate());
+		List<Comanda> cerradas = tpv.comandasCerradas(comanda1.getFecha().toLocalDate());
 
 		assertTrue(cerradas.contains(comanda1));
 		assertFalse(cerradas.contains(comanda2));

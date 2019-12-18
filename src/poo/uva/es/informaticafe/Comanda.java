@@ -4,11 +4,20 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * La clase {@link Comanda} nos permite crear una comanda que se compone de un
+ * estado, una fecha, un vendible y por ultimo un importe.
+ * 
+ * @author carlgom
+ * @author manmend
+ * @author migrase
+ * @version 2.0
+ */
 public abstract class Comanda {
 
 	private Estados estado;
 	private LocalDateTime fecha;
-	private HashMap<Producto, Integer> productos;
+	private HashMap<Vendible,Integer> vendibles;
 	private double importe;
 
 	/**
@@ -17,7 +26,7 @@ public abstract class Comanda {
 
 	public Comanda() {
 		fecha = LocalDateTime.now();
-		productos = new HashMap<>();
+		vendibles = new HashMap<>();
 		estado = Estados.ABIERTO;
 		importe = 0;
 	}
@@ -52,15 +61,14 @@ public abstract class Comanda {
 	/**
 	 * Cambia el estado de la comanda
 	 * 
-	 * @param estado
-	 *            Nuevo estado al que queremos cambiar nuestra comanda
+	 * @param estado Nuevo estado al que queremos cambiar nuestra comanda
 	 * 
-	 * @throws IllegalArgumentException
-	 *             si se intenta cambiar el estado de una comanda ya pagada
-	 * @throws IllegalArgumentException
-	 *             si se intenta cambiar el estado de una comanda anulada
-	 * @throws IllegalArgumentException
-	 *             cuando el nuevo estado es igual que el que ya tenía la comanda
+	 * @throws IllegalArgumentException si se intenta cambiar el estado de una
+	 *                                  comanda ya pagada
+	 * @throws IllegalArgumentException si se intenta cambiar el estado de una
+	 *                                  comanda anulada
+	 * @throws IllegalArgumentException cuando el nuevo estado es igual que el que
+	 *                                  ya tenía la comanda
 	 */
 	public void setEstado(Estados estado) {
 
@@ -78,7 +86,7 @@ public abstract class Comanda {
 
 		if (estado == Estados.PAGADO) {
 			setImporte(importe());
-			sirveProductos();
+			sirvevendibles();
 		}
 		this.estado = estado;
 	}
@@ -100,7 +108,7 @@ public abstract class Comanda {
 		}
 
 		// Itera sobre los pares HashMap creando un Map individual por cada par
-		for (Map.Entry<Producto, Integer> par : productos().entrySet()) {
+		for (Map.Entry<Vendible, Integer> par : consultaVendibles().entrySet()) {
 			// Suma el precio de cada producto por la cantidad al importe
 			dinero += par.getKey().precio() * par.getValue();
 		}
@@ -108,10 +116,8 @@ public abstract class Comanda {
 		return dinero;
 	}
 
-	
-
-	private void sirveProductos() {
-		for (Map.Entry<Producto, Integer> par : productos().entrySet()) {
+	private void sirvevendibles() {
+		for (Map.Entry<Vendible, Integer> par : consultaVendibles().entrySet()) {
 			if (par.getKey().unidadesDisponibles() < par.getValue()) {
 				throw new IllegalArgumentException("No se puede vender una comanda sin stock suficiente");
 			}
@@ -121,35 +127,31 @@ public abstract class Comanda {
 
 	}
 
-	private HashMap<Producto, Integer> productos() {
-		return productos;
+	private  HashMap<Vendible,Integer> consultaVendibles() {
+		return vendibles;
 	}
 
 	/**
 	 * Comprueba si un producto espeficidado existe en la comanda
 	 * 
-	 * @param producto
-	 *            Producto a comprobar su existencia
+	 * @param producto Producto a comprobar su existencia
 	 * @return true si existe en la comanda, false en caso contrario
 	 */
 	public boolean tieneProducto(Producto producto) {
 
-		return productos().containsKey(producto);
+		return consultaVendibles().containsKey(producto);
 	}
 
 	/**
 	 * Introduce un nuevo producto a la comanda.
 	 * 
-	 * @param producto
-	 *            Producto a introducir en la comanda
-	 * @param cantidad
-	 *            Cantidad de producto a introducir {@code(0 < cantidad < stock)}
-	 * @throws IllegalArgumentException
-	 *             cuando el producto ya existe en la comanda
-	 * @throws IllegalArgumentException
-	 *             cuando la cantidad es negativa
-	 * @throws IllegalArgumentException
-	 *             cuando la cantidad es mayor que el stock disponible
+	 * @param producto Producto a introducir en la comanda
+	 * @param cantidad Cantidad de producto a introducir {@code 0 < cantidad <
+	 *                 stock}
+	 * @throws IllegalArgumentException cuando el producto ya existe en la comanda
+	 * @throws IllegalArgumentException cuando la cantidad es negativa
+	 * @throws IllegalArgumentException cuando la cantidad es mayor que el stock
+	 *                                  disponible
 	 */
 	public void addProducto(Producto producto, int cantidad) {
 		if (tieneProducto(producto)) {
@@ -162,7 +164,7 @@ public abstract class Comanda {
 			throw new IllegalArgumentException("La cantidad no puede ser mayor al stock disponible.");
 		}
 
-		productos().put(producto, cantidad);
+		consultaVendibles().put(producto, cantidad);
 	}
 
 	/**
@@ -170,17 +172,15 @@ public abstract class Comanda {
 	 * <p>
 	 * El stock del producto utilizado en la comanda se vuelve disponible de nuevo.
 	 * 
-	 * @param producto
-	 *            producto a remover de la comanda
-	 * @throws IllegalArgumentException
-	 *             cuando el producto no existe
+	 * @param producto producto a remover de la comanda
+	 * @throws IllegalArgumentException cuando el producto no existe
 	 */
 	public void removeProducto(Producto producto) {
 		if (!tieneProducto(producto)) {
 			throw new IllegalArgumentException("El producto debe existir.");
 		}
 
-		productos().remove(producto);
+		consultaVendibles().remove(producto);
 
 	}
 
@@ -188,34 +188,29 @@ public abstract class Comanda {
 	 * Dado un producto, devuelve la cantidad de unidades de ese producto asignadas
 	 * a la comanda.
 	 * 
-	 * @param producto
-	 *            producto del que se quiere comprobar la cantidad
+	 * @param producto producto del que se quiere comprobar la cantidad
 	 * @return cantidad de producto en la comanda
-	 * @throws IllegalArgumentException
-	 *             cuando el producto no existe en la comanda
+	 * @throws IllegalArgumentException cuando el producto no existe en la comanda
 	 */
 	public int cantidad(Producto producto) {
 		if (!tieneProducto(producto)) {
 			throw new IllegalArgumentException("El producto no existe en la comanda.");
 		}
 
-		return productos().get(producto);
+		return consultaVendibles().get(producto);
 	}
 
 	/**
 	 * Modifica la cantidad de un producto asignada a la comanda.
 	 * <p>
 	 * 
-	 * @param producto
-	 *            producto a remover de la comanda
-	 * @param cantidad
-	 *            nueva cantidad de producto a usar en la comanda
-	 * @throws IllegalArgumentException
-	 *             cuando el producto no existe en la comanda
-	 * @throws IllegalArgumentException
-	 *             cuando la cantidad que se va a usar del producto es negativa
-	 * @throws IllegalArgumentException
-	 *             cuando la cantidad que se pide es mayor que el stock disponible
+	 * @param producto producto a remover de la comanda
+	 * @param cantidad nueva cantidad de producto a usar en la comanda
+	 * @throws IllegalArgumentException cuando el producto no existe en la comanda
+	 * @throws IllegalArgumentException cuando la cantidad que se va a usar del
+	 *                                  producto es negativa
+	 * @throws IllegalArgumentException cuando la cantidad que se pide es mayor que
+	 *                                  el stock disponible
 	 */
 	public void modificaProducto(Producto producto, int cantidad) {
 		if (!tieneProducto(producto)) {
@@ -228,16 +223,16 @@ public abstract class Comanda {
 			throw new IllegalArgumentException("La cantidad no puede ser mayor al stock disponible.");
 		}
 
-		productos().put(producto, cantidad);
+		consultaVendibles().put(producto, cantidad);
 
 	}
 
 	/**
 	 * Comprueba si la comanda esta vacia.
 	 * 
-	 * @return true si la comanda no tiene productos, false en caso contrario.
+	 * @return true si la comanda no tiene vendibles, false en caso contrario.
 	 */
 	public boolean vacia() {
-		return productos().isEmpty();
+		return consultaVendibles().isEmpty();
 	}
 }

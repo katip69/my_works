@@ -1,7 +1,5 @@
 package poo.uva.es.informaticafe;
 
-import java.util.Map;
-
 /**
  * la clase {@link ComandaDomicilio} hereda de Comanda, resuelve el calculo del
  * importe e implementa algunos métodos nuevos
@@ -18,48 +16,68 @@ public class ComandaDomicilio extends Comanda {
 	private Zona zona;
 	private int bolsas;
 
-	public ComandaDomicilio() {
+	public ComandaDomicilio(String direccion, Zona zona) {
 		super();
-		direccion = " ";
-		zona = Zona.ZONA1;
-		bolsas = 0;
+		this.direccion = direccion;
+		this.zona = zona;
+		bolsas = 1;
 	}
 
 	private Zona getZona() {
 		return zona;
 	}
-
-	private int getBolsas() {
+/**
+ * Número de bolsas que tiene la {@link ComandaDomicilio}
+ * @return Entero que corresponde al numero de bolsas
+ */
+	public int getBolsas() {
 		return bolsas;
+	}
+/**
+ * Consulta la dirección a la que tiene que ser enviada una {@link ComandaDomicilio}
+ * @return String correspondiente a la dirección del envio
+ */
+	public String getDireccion() {
+		return direccion;
 	}
 
 	/**
 	 * Cambia el número de bolsas de la comanda
 	 * 
-	 * @param bolsas
-	 *            entero que indica el nuevo número de bolsas
+	 * @param bolsas entero que indica el nuevo número de bolsas
+	 * @throws IllegalArgumentException No puedes pedir menos de una bolsa
 	 */
 	public void setBolsas(int bolsas) {
+		if (bolsas < 1) {
+			throw new IllegalArgumentException("No puedes pedir menos de una bolsa");
+		}
+
 		this.bolsas = bolsas;
 	}
 
 	/**
 	 * Cambia la direeción de la comanda
 	 * 
-	 * @param direcion
-	 *            nueva direccion
+	 * @param direccion nueva direccion
+	 * @throws IllegalArgumentException No puedes poner una dirrecion nula
 	 */
-	public void setDireccion(String direccion) {
+	public void cambiaDireccion(String direccion) {
+		if (direccion == null) {
+			throw new IllegalArgumentException("No puedes poner una direccion nula");
+		}
 		this.direccion = direccion;
 	}
 
 	/**
 	 * Cambia la zona de la comanda
 	 * 
-	 * @param zona
-	 *            nuevo zona de la comanda
+	 * @param zona nuevo zona de la comanda
+	 * @throws IllegalArgumentException No puedes poner una direccion nula;
 	 */
 	public void setZona(Zona zona) {
+		if (zona == null) {
+			throw new IllegalArgumentException("No puedes poner una direccion nula");
+		}
 		this.zona = zona;
 	}
 
@@ -71,22 +89,17 @@ public class ComandaDomicilio extends Comanda {
 	public double importe() {
 		double dinero = 0;
 
-		if (super.getEstado() == Estados.ANULADO) {
+		if (getEstado() == Estados.ANULADO) {
 			return dinero;
 		}
+		switch (getZona()) {
 
-		if (super.getEstado() == Estados.PAGADO) {
-
-			switch (getZona()) {
-
-			case RESTO:
-				dinero += 1.5;
-			case ZONA2:
-				dinero += 0.5;
-			case ZONA1:
-				dinero += 0.5 + getBolsas() * 0.05;
-			}
-
+		case RESTO:
+			dinero += 1.5;
+		case ZONA2:
+			dinero += 0.5;
+		case ZONA1:
+			dinero += 0.5 + getBolsas() * 0.05;
 		}
 
 		return dinero + super.importe();
